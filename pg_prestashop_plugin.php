@@ -32,7 +32,8 @@ class PG_Prestashop_Plugin extends PaymentModule
     public function install()
     {
         return parent::install()
-            && $this->registerHook('header')
+            // && $this->registerHook('header')
+            && $this->registerHook('displayHeader')
             && $this->registerHook('displayPaymentReturn')
             && $this->registerHook('actionProductCancel')
             && $this->registerHook('paymentOptions');
@@ -265,9 +266,14 @@ class PG_Prestashop_Plugin extends PaymentModule
          * Create a PaymentOption object containing the necessary data
          * to display this module in the checkout
          */
+
+         
         $this->context->smarty->assign(array(
             'flavor' => FLAVOR,
         ));
+
+        $this->context->controller->addCSS($this->_path.'views/css/main.css');
+
 
         $newOption = new PaymentOption();
         $newOption->setModuleName($this->displayName)
@@ -384,11 +390,21 @@ class PG_Prestashop_Plugin extends PaymentModule
         }
     }
 
+    public function hookdisplayHeader($params)
+    {
+        $this->context->controller->registerStylesheet('modules-paymentez', 'modules/'.$this->name.'/css/main.css', ['media' => 'all', 'priority' => 150]);
+    }
+
+
     public function hookDisplayPaymentReturn($params)
     {
         if (!$this->active) {
             return;
         }
+
+        $this->context->controller->addCSS($this->_path.'views/css/main.css');
+
+
         $transaction_id = '';
         $collection = OrderPayment::getByOrderReference($params['order']->reference);
         if (count($collection) > 0)
@@ -398,7 +414,7 @@ class PG_Prestashop_Plugin extends PaymentModule
                 $transaction_id = $order_payment->transaction_id;
             }
         }
-
+        
         $this->context->smarty->assign(array(
             'payment_id' => $transaction_id,
             'module_gtw' => $this->displayName
