@@ -1,11 +1,11 @@
 {extends "$layout"}
 {block name="content"}
-
+{* <link rel="stylesheet" href="{$urls.base_url}/modules/pg_prestashop_plugin/views/css/main.css"> *}
 <script src="https://cdn.paymentez.com/ccapi/sdk/payment_checkout_stable.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 <div class="row">
-    <div class="paymentez-payment-title col-sm-7 col-lg-9">
+    <div class="payment-title col-sm-7 col-lg-9">
         <h3 class="text-xs-center text-md-left">
             Review your items to checkout
         </h3>
@@ -44,7 +44,7 @@
             </li>
             {/foreach}
         </ul>
-        <p class="paymentez-payment-modify text-xs-center text-md-left">
+        <p class="payment-modify text-xs-center text-md-left">
             <a href="{$urls.pages.cart}?action=show">
                 Modify or delete items
             </a>
@@ -63,11 +63,7 @@
     </div>
 </div>
 
-
-
-<div id="response">
-
-</div>
+<div id="response"></div>
 
 <script id="payment_checkout" type="text/javascript">
     jQuery(document).ready(function ($) {

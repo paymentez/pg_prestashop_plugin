@@ -1,3 +1,5 @@
+
+
 <?php
 use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
@@ -32,6 +34,7 @@ class PG_Prestashop_Plugin extends PaymentModule
     public function install()
     {
         return parent::install()
+            && $this->registerHook('header')
             && $this->registerHook('displayPaymentReturn')
             && $this->registerHook('actionProductCancel')
             && $this->registerHook('paymentOptions');
@@ -387,7 +390,10 @@ class PG_Prestashop_Plugin extends PaymentModule
 
     public function hookHeader()
     {
-        $this->context->controller->registerStylesheet('paymentez-styles', 'modules/pg_prestashop_plugin/views/css/main.css', ['media' => 'all', 'priority' => 150]);
+        $this->context->controller->registerStylesheet(
+            'front-css',
+            'modules/' . $this->name . '/views/css/main.css'
+        );
     }
 
 

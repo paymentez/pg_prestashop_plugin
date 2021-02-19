@@ -1,5 +1,5 @@
 /* SELECT PAYMENT METHOD */
-.paymentez-checkout {
+.payment-checkout {
   border-radius: 10px;
   border: 1px solid #26b57e;
   background: url(../../imgs/fondo-prestashop.jpg);
@@ -8,15 +8,15 @@
   background-position: right 0;
   background-repeat: no-repeat;
 }
-.paymentez-checkout-description {
+.payment-checkout-description {
   margin: 1em 0 0;
   max-width: 280px;
 }
-.paymentez-checkout-description span {
+.payment-checkout-description span {
   background-color: #ffffffc9;
 }
 @media (max-width: 575px) {
-  .paymentez-checkout {
+  .payment-checkout {
     background: linear-gradient(rgb(255 255 255), rgb(255 255 255 / 65%)),
       url(../../imgs/fondo-prestashop.jpg);
     background-position: center, right 0;
@@ -26,12 +26,12 @@
 }
 
 /* CHECKOUT VIEW */
-.paymentez-payment-modify {
+.payment-modify {
   margin-top: 2em;
 }
 
 @media (max-width: 575px) {
-  .paymentez-payment-title {
+  .payment-title {
     margin: 1em 0 2em;
   }
   .js-payment-checkout {
