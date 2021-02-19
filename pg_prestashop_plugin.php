@@ -32,8 +32,6 @@ class PG_Prestashop_Plugin extends PaymentModule
     public function install()
     {
         return parent::install()
-            // && $this->registerHook('header')
-            && $this->registerHook('displayHeader')
             && $this->registerHook('displayPaymentReturn')
             && $this->registerHook('actionProductCancel')
             && $this->registerHook('paymentOptions');
@@ -272,9 +270,6 @@ class PG_Prestashop_Plugin extends PaymentModule
             'flavor' => FLAVOR,
         ));
 
-        $this->context->controller->addCSS($this->_path.'views/css/main.css');
-
-
         $newOption = new PaymentOption();
         $newOption->setModuleName($this->displayName)
                   ->setCallToActionText($this->displayName)
@@ -390,9 +385,9 @@ class PG_Prestashop_Plugin extends PaymentModule
         }
     }
 
-    public function hookdisplayHeader($params)
+    public function hookHeader()
     {
-        $this->context->controller->registerStylesheet('modules-paymentez', 'modules/'.$this->name.'/css/main.css', ['media' => 'all', 'priority' => 150]);
+        $this->context->controller->registerStylesheet('paymentez-styles', 'modules/pg_prestashop_plugin/views/css/main.css', ['media' => 'all', 'priority' => 150]);
     }
 
 
@@ -401,9 +396,6 @@ class PG_Prestashop_Plugin extends PaymentModule
         if (!$this->active) {
             return;
         }
-
-        $this->context->controller->addCSS($this->_path.'views/css/main.css');
-
 
         $transaction_id = '';
         $collection = OrderPayment::getByOrderReference($params['order']->reference);
