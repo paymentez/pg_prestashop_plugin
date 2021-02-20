@@ -18,4 +18,8 @@ $_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_06956dd27ad9f8f
 $_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_c9cc8cce247e49bae79f15173ce97354'] = 'Salve';
 $_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_630f6dc397fe74e52d5189e2c80f282b'] = 'De volta à lista';
 $_MODULE['<{pg_prestashop_plugin}prestashop>payment_infos_b26fa41b09d5bc5431e8788601399902'] = '%s é uma solução completa para pagamentos online. Seguro, fácil e rápido.';
+$_MODULE['<{pg_prestashop_plugin}prestashop>payment_e636936569f9ab61b2b839b4ddfd6638'] = 'Revise seus itens para finalizar a compra';
+$_MODULE['<{pg_prestashop_plugin}prestashop>payment_76b6a47a02685d51794b9fdb095512e5'] = 'Pagar';
+$_MODULE['<{pg_prestashop_plugin}prestashop>payment_3501f8b4b8e546c8a6db4ed32b641eb2'] = 'Modificar ou excluir itens';
+$_MODULE['<{pg_prestashop_plugin}prestashop>payment_f8404b97bec82c39d288ab7f7158ec48'] = 'Se produzir um erro ao procesar su pago y não se pudo realizar. Pruebe con otra tarjeta.';
 $_MODULE['<{pg_prestashop_plugin}prestashop>payment_return_299a4f840f75d7d93a4237911f872406'] = 'Você acabou de concluir um pedido usando %s';

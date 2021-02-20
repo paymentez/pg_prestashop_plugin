@@ -2,7 +2,7 @@
 
 global $_MODULE;
 $_MODULE = array();
-$_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_407c8b95b792682e45a1337e95957c30'] = 'Desarrollo';
+$_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_407c8b95b792682e45a1337e95957c30'] = ' Desarrollo';
 $_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_bc4daade475c3f1caac20993939462b2'] = 'Módulo de pago para procesar pagos con tarjeta.';
 $_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_922dddfb62b1ac8c62a5230ca6b525da'] = '¿Está seguro de que desea desinstalar el módulo de pago de ';
 $_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_56114bfdb02d5edbe3ff57f1fc45e94f'] = 'Valor de Configuración del App Code Client Inválido';
@@ -18,4 +18,8 @@ $_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_06956dd27ad9f8f
 $_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_c9cc8cce247e49bae79f15173ce97354'] = 'Guardar';
 $_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_630f6dc397fe74e52d5189e2c80f282b'] = 'Volver al Listado';
 $_MODULE['<{pg_prestashop_plugin}prestashop>payment_infos_b26fa41b09d5bc5431e8788601399902'] = ' %s es una solución completa para pagos en línea. Seguro, fácil y rápido.';
+$_MODULE['<{pg_prestashop_plugin}prestashop>payment_e636936569f9ab61b2b839b4ddfd6638'] = 'Revise sus artículos para pagar';
+$_MODULE['<{pg_prestashop_plugin}prestashop>payment_76b6a47a02685d51794b9fdb095512e5'] = 'Pagar';
+$_MODULE['<{pg_prestashop_plugin}prestashop>payment_3501f8b4b8e546c8a6db4ed32b641eb2'] = 'Modificar o eliminar elementos';
+$_MODULE['<{pg_prestashop_plugin}prestashop>payment_f8404b97bec82c39d288ab7f7158ec48'] = 'Se produjo un error al procesar su pago y no se pudo realizar. Pruebe con otra tarjeta.';
 $_MODULE['<{pg_prestashop_plugin}prestashop>payment_return_299a4f840f75d7d93a4237911f872406'] = 'Acaba de completar un pedido utilizando %s';

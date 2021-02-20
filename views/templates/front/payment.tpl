@@ -1,19 +1,23 @@
 {extends "$layout"}
 {block name="content"}
-{* <link rel="stylesheet" href="{$urls.base_url}/modules/pg_prestashop_plugin/views/css/main.css"> *}
+<link rel="stylesheet" href="{$urls.base_url}/modules/pg_prestashop_plugin/views/css/main.css">
 <script src="https://cdn.paymentez.com/ccapi/sdk/payment_checkout_stable.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 <div class="row">
     <div class="payment-title col-sm-7 col-lg-9">
         <h3 class="text-xs-center text-md-left">
-            Review your items to checkout
+            <span>
+                {l s='Review your items to checkout' mod='pg_prestashop_plugin'}
+            </span>
         </h3>
     </div>
     <div class="col-sm-5 col-lg-3">
         <button class="btn btn-primary btn-block js-payment-checkout">
             <i class="material-icons">done</i>
-            Purchase
+            <span>
+                {l s='Purchase' mod='pg_prestashop_plugin'}
+            </span>
         </button>
     </div>
 </div>
@@ -46,7 +50,9 @@
         </ul>
         <p class="payment-modify text-xs-center text-md-left">
             <a href="{$urls.pages.cart}?action=show">
-                Modify or delete items
+                <span>
+                    {l s='Modify or delete items' mod='pg_prestashop_plugin'}
+                </span>
             </a>
         </p>
     </div>
@@ -58,7 +64,9 @@
     <div class="col-sm-5 col-lg-3">
         <button class="btn btn-primary btn-block js-payment-checkout">
             <i class="material-icons">done</i>
-            Purchase
+            <span>
+                {l s='Purchase' mod='pg_prestashop_plugin'}
+            </span>
         </button>
     </div>
 </div>
@@ -67,7 +75,6 @@
 
 <script id="payment_checkout" type="text/javascript">
     jQuery(document).ready(function ($) {
-        // console.log("{$order_reference}");
         let paymentCheckout = new PaymentCheckout.modal({
             client_app_code: "{$app_code}",
             client_app_key: "{$app_key}",
@@ -137,6 +144,7 @@
 
         function showMessageError() {
             console.error("error");
+            window.alert('{l s='An error occurred while processing your payment and could not be made. Try another Credit Card.' mod='pg_prestashop_plugin'}');
         }
     });
 </script>

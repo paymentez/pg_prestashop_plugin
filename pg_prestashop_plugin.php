@@ -284,7 +284,7 @@ class PG_Prestashop_Plugin extends PaymentModule
 
     public function hookActionProductCancel(array $params)
     {
-        if ($params['action'] === CancellationActionType::STANDARD_REFUND) {
+        if ($params['action'] === 1) {
             $amount_to_refund = 0;
 
             $cancel_product = $_POST['cancel_product'];
