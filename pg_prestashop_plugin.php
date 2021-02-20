@@ -1,3 +1,5 @@
+
+
 <?php
 use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
@@ -265,6 +267,8 @@ class PG_Prestashop_Plugin extends PaymentModule
          * Create a PaymentOption object containing the necessary data
          * to display this module in the checkout
          */
+
+         
         $this->context->smarty->assign(array(
             'flavor' => FLAVOR,
         ));
@@ -384,11 +388,21 @@ class PG_Prestashop_Plugin extends PaymentModule
         }
     }
 
+    public function hookHeader()
+    {
+        $this->context->controller->registerStylesheet(
+            'front-css',
+            'modules/' . $this->name . '/views/css/main.css'
+        );
+    }
+
+
     public function hookDisplayPaymentReturn($params)
     {
         if (!$this->active) {
             return;
         }
+
         $transaction_id = '';
         $collection = OrderPayment::getByOrderReference($params['order']->reference);
         if (count($collection) > 0)
@@ -398,7 +412,7 @@ class PG_Prestashop_Plugin extends PaymentModule
                 $transaction_id = $order_payment->transaction_id;
             }
         }
-
+        
         $this->context->smarty->assign(array(
             'payment_id' => $transaction_id,
             'module_gtw' => $this->displayName

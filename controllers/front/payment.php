@@ -45,6 +45,7 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
             'order_amount' => $total,
             'order_vat' => $vat,
             'order_reference' => $cart->id,
+            'products' => $products
         ]);
 
         $this->setTemplate('module:pg_prestashop_plugin/views/templates/front/payment.tpl');
