@@ -284,107 +284,94 @@ class PG_Prestashop_Plugin extends PaymentModule
 
     public function hookActionProductCancel(array $params)
     {
-        $amount_to_refund = 0;
+        if ($params['action'] === CancellationActionType::STANDARD_REFUND) {
+            $amount_to_refund = 0;
 
-        $cancel_product = $_POST['cancel_product'];
-        $order = $params['order'];
-        if (isset($cancel_product['shipping']))
-        {
-            $amount_to_refund += (float)$order->total_shipping;
-        }
-
-        $keys_pop = ['_token', 'save', 'voucher_refund_type', 'voucher', 'credit_slip', 'shipping_amount', 'shipping'];
-        foreach($keys_pop as $key)
-        {
-            unset($cancel_product[$key]);
-        }
-        // TODO: Definir un poco mas claras las variables y nombres para saber de que tratan, esta lógica es algo confusa
-        $selected = [];
-        $quantity = [];
-        foreach(array_keys($cancel_product) as $key)
-        {
-            if (strpos($key, 'selected') !== false)
-            {
-                $id_order_detail = (string)explode('_', $key)[1];
-                $selected[$id_order_detail] = $cancel_product[$key];
+            $cancel_product = $_POST['cancel_product'];
+            $order = $params['order'];
+            if (isset($cancel_product['shipping'])) {
+                $amount_to_refund += (float)$order->total_shipping;
             }
-            else if (strpos($key, 'quantity') !== false)
-            {
-                $id_order_detail = (string)explode('_', $key)[1];
-                $quantity[$id_order_detail] = $cancel_product[$key];
+
+            $keys_pop = ['_token', 'save', 'voucher_refund_type', 'voucher', 'credit_slip', 'shipping_amount', 'shipping'];
+            foreach ($keys_pop as $key) {
+                unset($cancel_product[$key]);
             }
-        }
-
-        $unit_prices = [];
-        foreach($selected as $key => $value)
-        {
-            if ($value)
-            {
-                $order_detail = new OrderDetail((int)$key);
-                $unit_prices[$key] = (float)$order_detail->unit_price_tax_incl;
-            }
-        }
-        foreach($unit_prices as $key => $value)
-        {
-            $amount_to_refund += $quantity[$key] * $value;
-        }
-
-        $environment = Configuration::get('environment');
-        $url = ($environment == 1) ? 'https://ccapi-stg.'.FLAVOR_DOMAIN.REFUND_PATH : 'https://ccapi.'.FLAVOR_DOMAIN.REFUND_PATH ;
-
-        // TODO: Crear un "get_payment_id()" para no copiar y pegar código para obtener el $transaction_id
-        $collection = OrderPayment::getByOrderReference($order->reference);
-        $transaction_id = "";
-        if (count($collection) > 0)
-        {
-            foreach ($collection as $order_payment)
-            {
-                if ($order_payment->payment_method == FLAVOR . ' Prestashop Plugin')
-                {
-                    $transaction_id = $order_payment->transaction_id;
+            // TODO: Definir un poco mas claras las variables y nombres para saber de que tratan, esta lógica es algo confusa
+            $selected = [];
+            $quantity = [];
+            foreach (array_keys($cancel_product) as $key) {
+                if (strpos($key, 'selected') !== false) {
+                    $id_order_detail = (string)explode('_', $key)[1];
+                    $selected[$id_order_detail] = $cancel_product[$key];
+                } else if (strpos($key, 'quantity') !== false) {
+                    $id_order_detail = (string)explode('_', $key)[1];
+                    $quantity[$id_order_detail] = $cancel_product[$key];
                 }
             }
-        }
 
-        $app_code_server = Configuration::get('app_code_server');
-        $app_key_server = Configuration::get('app_key_server');
-        $refund_data = [
-            "transaction" => ["id" => $transaction_id],
-            "order" => ["amount" => round($amount_to_refund, 2, PHP_ROUND_HALF_DOWN) + 200]
-        ];
-        $payload = json_encode($refund_data);
+            $unit_prices = [];
+            foreach ($selected as $key => $value) {
+                if ($value) {
+                    $order_detail = new OrderDetail((int)$key);
+                    $unit_prices[$key] = (float)$order_detail->unit_price_tax_incl;
+                }
+            }
+            foreach ($unit_prices as $key => $value) {
+                $amount_to_refund += $quantity[$key] * $value;
+            }
 
-        $timestamp = (string)time();
-        $uniq_token_string = $app_key_server . $timestamp;
-        $uniq_token_hash = hash('sha256', $uniq_token_string);
-        $auth_token = base64_encode($app_code_server . ';' . $timestamp . ';' . $uniq_token_hash);
+            $environment = Configuration::get('environment');
+            $url = ($environment == 1) ? 'https://ccapi-stg.' . FLAVOR_DOMAIN . REFUND_PATH : 'https://ccapi.' . FLAVOR_DOMAIN . REFUND_PATH;
 
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, ($payload));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type:application/json',
-            'Auth-Token:' . $auth_token));
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $get_response = json_decode($response, true);
-        if ($get_response['error'] || $get_response['status'] == 'failure')
-        {
-            $tab = Tools::getValue('tab');
-            $currentIndex = __PS_BASE_URI__.substr($_SERVER['SCRIPT_NAME'], strlen(__PS_BASE_URI__)).($tab ? '?tab='.$tab : '');
-            $token = Tools::getAdminTokenLite($tab);
-            // TODO: Este reedirect no recarga la página actual, no c que pasa, parece tema del currentIndex
-            Tools::redirectLink($currentIndex.'&id_order='.$order->id.'&vieworder&conf=1&token='.$token);
+            // TODO: Crear un "get_payment_id()" para no copiar y pegar código para obtener el $transaction_id
+            $collection = OrderPayment::getByOrderReference($order->reference);
+            $transaction_id = "";
+            if (count($collection) > 0) {
+                foreach ($collection as $order_payment) {
+                    if ($order_payment->payment_method == FLAVOR . ' Prestashop Plugin') {
+                        $transaction_id = $order_payment->transaction_id;
+                    }
+                }
+            }
 
-        }
-        else
-        {
-            // TODO: Agregar a un helper? change_order_history() o algo así
-            $history = new OrderHistory();
-            $history->id_order = (int)$order->id;
-            $history->changeIdOrderState(7, (int)($order->id));
-            $history->save();
+            $app_code_server = Configuration::get('app_code_server');
+            $app_key_server = Configuration::get('app_key_server');
+            $refund_data = [
+                "transaction" => ["id" => $transaction_id],
+                "order" => ["amount" => round($amount_to_refund, 2, PHP_ROUND_HALF_DOWN)]
+            ];
+            $payload = json_encode($refund_data);
+
+            $timestamp = (string)time();
+            $uniq_token_string = $app_key_server . $timestamp;
+            $uniq_token_hash = hash('sha256', $uniq_token_string);
+            $auth_token = base64_encode($app_code_server . ';' . $timestamp . ';' . $uniq_token_hash);
+
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, ($payload));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type:application/json',
+                'Auth-Token:' . $auth_token));
+            $response = curl_exec($ch);
+            curl_close($ch);
+            $get_response = json_decode($response, true);
+            if ($get_response['error'] || $get_response['status'] == 'failure') {
+                $tab = Tools::getValue('tab');
+                $currentIndex = __PS_BASE_URI__ . substr($_SERVER['SCRIPT_NAME'], strlen(__PS_BASE_URI__)) . ($tab ? '?tab=' . $tab : '');
+                $token = Tools::getAdminTokenLite($tab);
+                // TODO: Este reedirect no recarga la página actual, no c que pasa, parece tema del currentIndex
+                Tools::redirectLink($currentIndex . '&id_order=' . $order->id . '&vieworder&conf=1&token=' . $token);
+
+            } else {
+                // TODO: Agregar a un helper? change_order_history() o algo así
+                $history = new OrderHistory();
+                $history->id_order = (int)$order->id;
+                $history->changeIdOrderState(7, (int)($order->id));
+                $history->save();
+            }
         }
     }
 
