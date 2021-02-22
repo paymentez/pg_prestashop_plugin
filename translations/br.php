@@ -3,7 +3,7 @@
 global $_MODULE;
 $_MODULE = array();
 $_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_407c8b95b792682e45a1337e95957c30'] = 'Desenvolvimento';
-$_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_bc4daade475c3f1caac20993939462b2'] = 'Módulo de pagamento para processar pagamentos com cartão.';
+$_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_bc4daade475c3f1caac20993939462b2'] = ' Módulo de pagamento para processar pagamentos com cartão.';
 $_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_922dddfb62b1ac8c62a5230ca6b525da'] = 'Tem certeza que deseja desinstalar o módulo de pagamento por ';
 $_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_56114bfdb02d5edbe3ff57f1fc45e94f'] = 'Valor de configuração App Code Client inválido';
 $_MODULE['<{pg_prestashop_plugin}prestashop>pg_prestashop_plugin_c888438d14855d7d96a2724ee9c306bd'] = 'Configurações atualizadas';
