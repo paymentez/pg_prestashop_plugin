@@ -22,4 +22,6 @@ $_MODULE['<{pg_prestashop_plugin}prestashop>payment_e636936569f9ab61b2b839b4ddfd
 $_MODULE['<{pg_prestashop_plugin}prestashop>payment_76b6a47a02685d51794b9fdb095512e5'] = 'Pagar';
 $_MODULE['<{pg_prestashop_plugin}prestashop>payment_3501f8b4b8e546c8a6db4ed32b641eb2'] = 'Modificar o eliminar elementos';
 $_MODULE['<{pg_prestashop_plugin}prestashop>payment_f8404b97bec82c39d288ab7f7158ec48'] = 'Se produjo un error al procesar su pago y no se pudo realizar. Pruebe con otra tarjeta.';
+$_MODULE['<{pg_prestashop_plugin}prestashop>payment_return_3dbbff638cc490e8f970adbc8cfd0e4b'] = 'Felicidades!';
 $_MODULE['<{pg_prestashop_plugin}prestashop>payment_return_299a4f840f75d7d93a4237911f872406'] = 'Acaba de completar un pedido utilizando %s';
+$_MODULE['<{pg_prestashop_plugin}prestashop>payment_return_dd4441f8ab7ce03064f7488692a52369'] = 'Tu identificador del pago es: %s';
