@@ -2,7 +2,7 @@
 <section>
       <div class="col">
           <div class="payment-checkout">
-              <img src="{$urls.base_url}/modules/pg_prestashop_plugin/imgs/paymentez-logo.svg" alt="Paymentez method"
+              <img src="{$urls.base_url}/modules/pg_prestashop_plugin/imgs/payment-logo.svg" alt="Payment method"
                   class="payment-checkout-img">
               <p class="payment-checkout-description">
               <span>
