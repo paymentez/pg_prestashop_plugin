@@ -3,14 +3,15 @@
 <?php
 use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
-define('FLAVOR', 'Paymentez');
-define('FLAVOR_DOMAIN', 'paymentez.com');
-define('REFUND_PATH', '/v2/transaction/refund/');
+const FLAVOR = 'Paymentez';
+const FLAVOR_DOMAIN = 'paymentez.com';
+const REFUND_PATH = '/v2/transaction/refund/';
 
 /**
  * PG_Prestashop_Plugin - A Payment Module for PrestaShop 1.7.7
  * @author Paymentez Development <dev@paymentez.com>
  * @license http://opensource.org/licenses/afl-3.0.php
+ * @method l(string $string), Prestashop Language Method
  */
 class PG_Prestashop_Plugin extends PaymentModule
 {
