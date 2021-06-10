@@ -49,19 +49,18 @@ class PG_Prestashop_Plugin extends PaymentModule
     public function getContent()
     {
         $output = null;
+        $error_messages = [];
 
         if (Tools::isSubmit('submit'.$this->name)) {
-            // TODO: Un Settings updated por cada campo? cambiar eso
             $app_code_client = strval(Tools::getValue('app_code_client'));
             if (
                 !$app_code_client ||
                 empty($app_code_client) ||
                 !Validate::isGenericName($app_code_client)
             ) {
-                $output .= $this->displayError($this->l('Invalid App Code Client Configuration Value'));
+                array_push($error_messages, $this->l('Invalid App Code Client Configuration Value'));
             } else {
                 Configuration::updateValue('app_code_client', $app_code_client);
-                $output .= $this->displayConfirmation($this->l('Settings updated'));
             }
 
             $app_key_client = strval(Tools::getValue('app_key_client'));
@@ -70,10 +69,9 @@ class PG_Prestashop_Plugin extends PaymentModule
                 empty($app_key_client) ||
                 !Validate::isGenericName($app_key_client)
             ) {
-                $output .= $this->displayError($this->l('Invalid App Key Client Configuration Value'));
+                array_push($error_messages, $this->l('Invalid App Key Client Configuration Value'));
             } else {
                 Configuration::updateValue('app_key_client', $app_key_client);
-                $output .= $this->displayConfirmation($this->l('Settings updated'));
             }
 
             $app_code_server = strval(Tools::getValue('app_code_server'));
@@ -82,10 +80,9 @@ class PG_Prestashop_Plugin extends PaymentModule
                 empty($app_code_server) ||
                 !Validate::isGenericName($app_code_server)
             ) {
-                $output .= $this->displayError($this->l('Invalid App Code Server Configuration Value'));
+                array_push($error_messages, $this->l('Invalid App Code Server Configuration Value'));
             } else {
                 Configuration::updateValue('app_code_server', $app_code_server);
-                $output .= $this->displayConfirmation($this->l('Settings updated'));
             }
 
             $app_key_server = strval(Tools::getValue('app_key_server'));
@@ -94,10 +91,9 @@ class PG_Prestashop_Plugin extends PaymentModule
                 empty($app_key_server) ||
                 !Validate::isGenericName($app_key_server)
             ) {
-                $output .= $this->displayError($this->l('Invalid App Key Server Configuration Value'));
+                array_push($error_messages, $this->l('Invalid App Key Server Configuration Value'));
             } else {
                 Configuration::updateValue('app_key_server', $app_key_server);
-                $output .= $this->displayConfirmation($this->l('Settings updated'));
             }
 
             $checkout_language = strval(Tools::getValue('checkout_language'));
@@ -106,10 +102,9 @@ class PG_Prestashop_Plugin extends PaymentModule
                 empty($checkout_language) ||
                 !Validate::isGenericName($checkout_language)
             ) {
-                $output .= $this->displayError($this->l('Invalid Checkout Language Configuration Value'));
+                array_push($error_messages, $this->l('Invalid Checkout Language Configuration Value'));
             } else {
                 Configuration::updateValue('checkout_language', $checkout_language);
-                $output .= $this->displayConfirmation($this->l('Settings updated'));
             }
 
             $environment = strval(Tools::getValue('environment'));
@@ -118,10 +113,17 @@ class PG_Prestashop_Plugin extends PaymentModule
                 empty($environment) ||
                 !Validate::isGenericName($environment)
             ) {
-                $output .= $this->displayError($this->l('Invalid Environment Configuration Value'));
+                array_push($error_messages, $this->l('Invalid Environment Configuration Value'));
             } else {
                 Configuration::updateValue('environment', $environment);
+            }
+
+            if (!$error_messages) {
                 $output .= $this->displayConfirmation($this->l('Settings updated'));
+            } else {
+                foreach ($error_messages as $error_message) {
+                    $output .= $this->displayError($this->l($error_message));
+                }
             }
         }
 
