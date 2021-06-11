@@ -52,6 +52,17 @@ class PG_Prestashop_Plugin extends PaymentModule
         $error_messages = [];
 
         if (Tools::isSubmit('submit'.$this->name)) {
+            $environment = strval(Tools::getValue('environment'));
+            if (
+                !$environment ||
+                empty($environment) ||
+                !Validate::isGenericName($environment)
+            ) {
+                array_push($error_messages, $this->l('Invalid Environment Configuration Value'));
+            } else {
+                Configuration::updateValue('environment', $environment);
+            }
+
             $app_code_client = strval(Tools::getValue('app_code_client'));
             if (
                 !$app_code_client ||
@@ -107,15 +118,13 @@ class PG_Prestashop_Plugin extends PaymentModule
                 Configuration::updateValue('checkout_language', $checkout_language);
             }
 
-            $environment = strval(Tools::getValue('environment'));
-            if (
-                !$environment ||
-                empty($environment) ||
-                !Validate::isGenericName($environment)
-            ) {
-                array_push($error_messages, $this->l('Invalid Environment Configuration Value'));
+            $payment_methods_enabled = [
+                Tools::getValue('payment_methods_enabled_1'), Tools::getValue('payment_methods_enabled_2')
+            ];
+            if (!$payment_methods_enabled[0] and !$payment_methods_enabled[1]) {
+                array_push($error_messages, $this->l('Invalid Payment Methods Enabled Configuration Value'));
             } else {
-                Configuration::updateValue('environment', $environment);
+                Configuration::updateValue('payment_methods_enabled', $payment_methods_enabled);
             }
 
             if (!$error_messages) {
@@ -141,6 +150,26 @@ class PG_Prestashop_Plugin extends PaymentModule
                 'title' => FLAVOR.$this->l(' Payment Gateway Configurations'),
             ],
             'input' => [
+                [
+                    'type' => 'select',
+                    'label' => $this->l('Environment:'),
+                    'name' => 'environment',
+                    'required' => true,
+                    'options' => [
+                        'query' => [
+                            [
+                                'id_option' => 1,
+                                'name' => 'STG',
+                            ],
+                            [
+                                'id_option' => 2,
+                                'name' => 'PROD',
+                            ],
+                        ],
+                        'id' => 'id_option',
+                        'name' => 'name',
+                    ]
+                ],
                 [
                     'type' => 'text',
                     'label' => $this->l('App Code Client:'),
@@ -175,7 +204,7 @@ class PG_Prestashop_Plugin extends PaymentModule
                     'name' => 'checkout_language',
                     'required' => true,
                     'options' => [
-                        'query' => $options = [
+                        'query' => [
                             [
                                 'id_option' => 1,
                                 'name' => 'ES',
@@ -194,24 +223,27 @@ class PG_Prestashop_Plugin extends PaymentModule
                     ]
                 ],
                 [
-                    'type' => 'select',
-                    'label' => $this->l('Environment:'),
-                    'name' => 'environment',
-                    'required' => true,
-                    'options' => [
-                        'query' => $options = [
+                    'type'      => 'checkbox',
+                    'label'     => $this->l('Payment Methods Enabled:'),
+                    'desc'      => $this->l('Select at least 1 payment method for the user payment.'),
+                    'name'      => 'payment_methods_enabled',
+                    'required'  => true,
+                    'values'    => [
+                        'query' => [
                             [
                                 'id_option' => 1,
-                                'name' => 'STG',
+                                'name' => $this->l('Card'),
+                                'val' => 1
                             ],
                             [
                                 'id_option' => 2,
-                                'name' => 'PROD',
+                                'name' => $this->l('LinkToPay'),
+                                'val' => 2
                             ],
                         ],
                         'id' => 'id_option',
                         'name' => 'name',
-                    ]
+                    ],
                 ],
             ],
             'submit' => [
@@ -256,6 +288,12 @@ class PG_Prestashop_Plugin extends PaymentModule
         $helper->fields_value['app_key_server'] = Tools::getValue('app_key_server', Configuration::get('app_key_server'));
         $helper->fields_value['checkout_language'] = Tools::getValue('checkout_language', Configuration::get('checkout_language'));
         $helper->fields_value['environment'] = Tools::getValue('environment', Configuration::get('environment'));
+        $helper->fields_value['payment_methods_enabled_1'] = Tools::getValue('payment_methods_enabled_1', Configuration::get('payment_methods_enabled_1'));
+        $helper->fields_value['payment_methods_enabled_2'] = Tools::getValue('payment_methods_enabled_2', Configuration::get('payment_methods_enabled_2'));
+        //$helper->fields_value['ltp_button_text'] = Tools::getValue('ltp_button_text', Configuration::get('ltp_button_text'));
+        //$helper->fields_value['card_button_text'] = Tools::getValue('card_button_text', Configuration::get('card_button_text'));
+        //$helper->fields_value['ltp_expiration_days'] = Tools::getValue('ltp_expiration_days', Configuration::get('ltp_expiration_days'));
+        //$helper->fields_value['enable_installments'] = Tools::getValue('enable_installments', Configuration::get('enable_installments'));
 
         return $helper->generateForm($fieldsForm);
     }
