@@ -124,7 +124,12 @@ class PG_Prestashop_Plugin extends PaymentModule
             if (!$payment_methods_enabled[0] and !$payment_methods_enabled[1]) {
                 array_push($error_messages, $this->l('Invalid Payment Methods Enabled Configuration Value'));
             } else {
-                Configuration::updateValue('payment_methods_enabled', $payment_methods_enabled);
+                if ($payment_methods_enabled[0]) {
+                    Configuration::updateValue('payment_methods_enabled_1', $payment_methods_enabled[0]);
+                }
+                if ($payment_methods_enabled[1]) {
+                    Configuration::updateValue('payment_methods_enabled_2', $payment_methods_enabled[1]);
+                }
             }
 
             $card_button_text = strval(Tools::getValue('card_button_text'));
@@ -354,8 +359,8 @@ class PG_Prestashop_Plugin extends PaymentModule
         $helper->fields_value['app_key_server'] = Tools::getValue('app_key_server', Configuration::get('app_key_server'));
         $helper->fields_value['checkout_language'] = Tools::getValue('checkout_language', Configuration::get('checkout_language'));
         $helper->fields_value['environment'] = Tools::getValue('environment', Configuration::get('environment'));
-        $helper->fields_value['payment_methods_enabled_1'] = Tools::getValue('payment_methods_enabled_1');
-        $helper->fields_value['payment_methods_enabled_2'] = Tools::getValue('payment_methods_enabled_2');
+        $helper->fields_value['payment_methods_enabled_1'] = Tools::getValue('payment_methods_enabled_1',  Configuration::get('payment_methods_enabled_1'));
+        $helper->fields_value['payment_methods_enabled_2'] = Tools::getValue('payment_methods_enabled_2',  Configuration::get('payment_methods_enabled_2'));
         $helper->fields_value['ltp_button_text'] = Tools::getValue('ltp_button_text', Configuration::get('ltp_button_text'));
         $helper->fields_value['card_button_text'] = Tools::getValue('card_button_text', Configuration::get('card_button_text'));
         $helper->fields_value['ltp_expiration_days'] = intval(Tools::getValue('ltp_expiration_days', Configuration::get('ltp_expiration_days')));

@@ -19,6 +19,12 @@
                 {l s='Purchase' mod='pg_prestashop_plugin'}
             </span>
         </button>
+        <button class="btn btn-primary btn-block js-payment-checkout">
+            <i class="material-icons">done</i>
+            <span>
+                {l s='LinkToPay' mod='pg_prestashop_plugin'}
+            </span>
+        </button>
     </div>
 </div>
 <hr>
@@ -67,6 +73,12 @@
             <span>
                 {l s='Purchase' mod='pg_prestashop_plugin'}
             </span>
+        </button>
+        <button class="btn btn-primary btn-block js-payment-checkout">
+            <i class="material-icons">done</i>
+            <span>
+            {l s='LinkToPay' mod='pg_prestashop_plugin'}
+        </span>
         </button>
     </div>
 </div>
