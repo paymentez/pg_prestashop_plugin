@@ -63,13 +63,13 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
     {
         if (!empty($_POST))
         {
-            $amount = Tools::getValue('amount');
+            $amount     = Tools::getValue('amount');
             $payment_id = Tools::getValue('id');
-            $status = Tools::getValue('status');
-            $total = (float)$amount;
+            $status     = Tools::getValue('status');
+            $total      = (float)$amount;
 
-            $cart = $this->context->cart;
-            $customer = new Customer($cart->id_customer);
+            $cart       = $this->context->cart;
+            $customer   = new Customer($cart->id_customer);
 
             if ($status == 'success')
             {
@@ -98,7 +98,7 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
                 }
             }
             $this->context->smarty->assign([
-                'pg_status' => $status,
+                'pg_status'  => $status,
                 'payment_id' => $payment_id,
                 'module_gtw' => $this->module->displayName
             ]);
