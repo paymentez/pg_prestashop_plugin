@@ -181,76 +181,76 @@ class PG_Prestashop_Plugin extends PaymentModule
             ],
             'input' => [
                 [
-                    'type' => 'select',
-                    'label' => $this->l('Environment:'),
-                    'desc' => $this->l('Payment Gateway Environment'),
-                    'name' => 'environment',
-                    'required' => true,
-                    'options' => [
+                    'type'      => 'select',
+                    'label'     => $this->l('Environment:'),
+                    'desc'      => $this->l('Payment Gateway Environment'),
+                    'name'      => 'environment',
+                    'required'  => true,
+                    'options'   => [
                         'query' => [
                             [
                                 'id_option' => 1,
-                                'name' => $this->l('Staging'),
+                                'name' => $this->l('Testing'),
                             ],
                             [
                                 'id_option' => 2,
                                 'name' => $this->l('Production'),
                             ],
                         ],
-                        'id' => 'id_option',
-                        'name' => 'name',
+                        'id'    => 'id_option',
+                        'name'  => 'name',
                     ]
                 ],
                 [
-                    'type' => 'text',
-                    'label' => $this->l('App Code Client:'),
-                    'desc' => $this->l('Unique commerce identifier in ').FLAVOR,
-                    'name' => 'app_code_client',
+                    'type'     => 'text',
+                    'label'    => $this->l('App Code Client:'),
+                    'desc'     => $this->l('Unique commerce identifier in ').FLAVOR,
+                    'name'     => 'app_code_client',
                     'required' => true
                 ],
                 [
-                    'type' => 'text',
-                    'label' => $this->l('App Key Client:'),
-                    'desc' => $this->l('Key used to encrypt communication with ').FLAVOR,
-                    'name' => 'app_key_client',
+                    'type'     => 'text',
+                    'label'    => $this->l('App Key Client:'),
+                    'desc'     => $this->l('Key used to encrypt communication with ').FLAVOR,
+                    'name'     => 'app_key_client',
                     'required' => true
                 ],
                 [
-                    'type' => 'text',
-                    'label' => $this->l('App Code Server:'),
-                    'desc' => $this->l('Unique commerce identifier to perform admin actions on ').FLAVOR,
-                    'name' => 'app_code_server',
+                    'type'     => 'text',
+                    'label'    => $this->l('App Code Server:'),
+                    'desc'     => $this->l('Unique commerce identifier to perform admin actions on ').FLAVOR,
+                    'name'     => 'app_code_server',
                     'required' => true
                 ],
                 [
-                    'type' => 'text',
-                    'label' => $this->l('App Key Server:'),
-                    'desc' => $this->l('Key used to encrypt admin communication with ').FLAVOR,
-                    'name' => 'app_key_server',
+                    'type'     => 'text',
+                    'label'    => $this->l('App Key Server:'),
+                    'desc'     => $this->l('Key used to encrypt admin communication with ').FLAVOR,
+                    'name'     => 'app_key_server',
                     'required' => true
                 ],
                 [
-                    'type' => 'select',
-                    'label' => $this->l('Checkout Language:'),
-                    'desc' => $this->l('User\'s preferred language for checkout window. English will be used by default.'),
-                    'name' => 'checkout_language',
-                    'required' => true,
-                    'options' => [
+                    'type'      => 'select',
+                    'label'     => $this->l('Checkout Language:'),
+                    'desc'      => $this->l('User\'s preferred language for checkout window. English will be used by default.'),
+                    'name'      => 'checkout_language',
+                    'required'  => true,
+                    'options'   => [
                         'query' => [
                             [
                                 'id_option' => 1,
-                                'name' => 'EN',
+                                'name'      => 'EN',
                             ],
                             [
                                 'id_option' => 2,
-                                'name' => 'ES',
+                                'name'      => 'ES',
                             ],
                             [
                                 'id_option' => 3,
-                                'name' => 'PT',
+                                'name'      => 'PT',
                             ],
                         ],
-                        'id' => 'id_option',
+                        'id'   => 'id_option',
                         'name' => 'name',
                     ]
                 ],
@@ -264,59 +264,59 @@ class PG_Prestashop_Plugin extends PaymentModule
                         'query' => [
                             [
                                 'id_option' => 1,
-                                'name' => $this->l('Card'),
-                                'val' => 1
+                                'name'      => $this->l('Card'),
+                                'val'       => 1
                             ],
                             [
                                 'id_option' => 2,
-                                'name' => $this->l('LinkToPay'),
-                                'val' => 2
+                                'name'      => $this->l('LinkToPay'),
+                                'val'       => 2
                             ],
                         ],
-                        'id' => 'id_option',
-                        'name' => 'name',
+                        'id'    => 'id_option',
+                        'name'  => 'name',
                     ],
                 ],
                 [
-                    'type' => 'text',
-                    'label' => $this->l('Card Button Text:'),
-                    'desc'  => $this->l('This controls the text that the user sees in the card payment button. Pay With Card is used by default.'),
-                    'name' => 'card_button_text',
+                    'type'     => 'text',
+                    'label'    => $this->l('Card Button Text:'),
+                    'desc'     => $this->l('This controls the text that the user sees in the card payment button. Pay With Card is used by default.'),
+                    'name'     => 'card_button_text',
                     'required' => false,
                 ],
                 [
-                    'type' => 'text',
-                    'label' => $this->l('LinkToPay Button Text:'),
-                    'desc'  => $this->l('This controls the text that the user sees in the LinkToPay payment button. Pay With LinkToPay is used by default.'),
-                    'name' => 'ltp_button_text',
+                    'type'     => 'text',
+                    'label'    => $this->l('LinkToPay Button Text:'),
+                    'desc'     => $this->l('This controls the text that the user sees in the LinkToPay payment button. Pay With LinkToPay is used by default.'),
+                    'name'     => 'ltp_button_text',
                     'required' => false,
                 ],
                 [
-                    'type' => 'text',
-                    'label' => $this->l('LinkToPay Expiration Days:'),
-                    'desc'  => $this->l('This value controls the number of days that the generated LinkToPay will be available to pay.'),
-                    'name' => 'ltp_expiration_days',
+                    'type'     => 'text',
+                    'label'    => $this->l('LinkToPay Expiration Days:'),
+                    'desc'     => $this->l('This value controls the number of days that the generated LinkToPay will be available to pay.'),
+                    'name'     => 'ltp_expiration_days',
                     'required' => true,
                 ],
                 [
-                    'type' => 'select',
-                    'label' => $this->l('Allow Installments:'),
-                    'desc' => $this->l('If selected, the installments options will be showed on the payment screen (Only on card payment).'),
-                    'name' => 'enable_installments',
-                    'required' => true,
-                    'options' => [
+                    'type'      => 'select',
+                    'label'     => $this->l('Allow Installments:'),
+                    'desc'      => $this->l('If selected, the installments options will be showed on the payment screen (Only on card payment).'),
+                    'name'      => 'enable_installments',
+                    'required'  => true,
+                    'options'   => [
                         'query' => [
                             [
                                 'id_option' => 0,
-                                'name' => 'Disabled',
+                                'name'      => 'Disabled',
                             ],
                             [
                                 'id_option' => 1,
-                                'name' => 'Enabled',
+                                'name'      => 'Enabled',
                             ],
                         ],
-                        'id' => 'id_option',
-                        'name' => 'name',
+                        'id'    => 'id_option',
+                        'name'  => 'name',
                     ]
                 ],
             ],
@@ -329,21 +329,21 @@ class PG_Prestashop_Plugin extends PaymentModule
         $helper = new HelperForm();
 
         // Module, token and currentIndex
-        $helper->module = $this;
+        $helper->module          = $this;
         $helper->name_controller = $this->name;
-        $helper->token = Tools::getAdminTokenLite('AdminModules');
-        $helper->currentIndex = AdminController::$currentIndex.'&configure='.$this->name;
+        $helper->token           = Tools::getAdminTokenLite('AdminModules');
+        $helper->currentIndex    = AdminController::$currentIndex.'&configure='.$this->name;
 
         // Language
-        $helper->default_form_language = $defaultLang;
+        $helper->default_form_language    = $defaultLang;
         $helper->allow_employee_form_lang = $defaultLang;
 
         // Title and toolbar
-        $helper->title = $this->displayName;
-        $helper->show_toolbar = true;        // false -> remove toolbar
+        $helper->title          = $this->displayName;
+        $helper->show_toolbar   = true;        // false -> remove toolbar
         $helper->toolbar_scroll = true;      // yes - > Toolbar is always visible on the top of the screen.
-        $helper->submit_action = 'submit'.$this->name;
-        $helper->toolbar_btn = [
+        $helper->submit_action  = 'submit'.$this->name;
+        $helper->toolbar_btn    = [
             'save' => [
                 'desc' => $this->l('Save'),
                 'href' => AdminController::$currentIndex.'&configure='.$this->name.'&save'.$this->name.
@@ -356,18 +356,18 @@ class PG_Prestashop_Plugin extends PaymentModule
         ];
 
         // Load currents values
-        $helper->fields_value['app_code_client'] = Tools::getValue('app_code_client', Configuration::get('app_code_client'));
-        $helper->fields_value['app_key_client'] = Tools::getValue('app_key_client', Configuration::get('app_key_client'));
-        $helper->fields_value['app_code_server'] = Tools::getValue('app_code_server', Configuration::get('app_code_server'));
-        $helper->fields_value['app_key_server'] = Tools::getValue('app_key_server', Configuration::get('app_key_server'));
-        $helper->fields_value['checkout_language'] = Tools::getValue('checkout_language', Configuration::get('checkout_language'));
-        $helper->fields_value['environment'] = Tools::getValue('environment', Configuration::get('environment'));
+        $helper->fields_value['app_code_client']           = Tools::getValue('app_code_client', Configuration::get('app_code_client'));
+        $helper->fields_value['app_key_client']            = Tools::getValue('app_key_client', Configuration::get('app_key_client'));
+        $helper->fields_value['app_code_server']           = Tools::getValue('app_code_server', Configuration::get('app_code_server'));
+        $helper->fields_value['app_key_server']            = Tools::getValue('app_key_server', Configuration::get('app_key_server'));
+        $helper->fields_value['checkout_language']         = Tools::getValue('checkout_language', Configuration::get('checkout_language'));
+        $helper->fields_value['environment']               = Tools::getValue('environment', Configuration::get('environment'));
         $helper->fields_value['payment_methods_enabled_1'] = Tools::getValue('payment_methods_enabled_1',  Configuration::get('payment_methods_enabled_1'));
         $helper->fields_value['payment_methods_enabled_2'] = Tools::getValue('payment_methods_enabled_2',  Configuration::get('payment_methods_enabled_2'));
-        $helper->fields_value['ltp_button_text'] = Tools::getValue('ltp_button_text', Configuration::get('ltp_button_text'));
-        $helper->fields_value['card_button_text'] = Tools::getValue('card_button_text', Configuration::get('card_button_text'));
-        $helper->fields_value['ltp_expiration_days'] = intval(Tools::getValue('ltp_expiration_days', Configuration::get('ltp_expiration_days')));
-        $helper->fields_value['enable_installments'] = Tools::getValue('enable_installments', Configuration::get('enable_installments'));
+        $helper->fields_value['ltp_button_text']           = Tools::getValue('ltp_button_text', Configuration::get('ltp_button_text'));
+        $helper->fields_value['card_button_text']          = Tools::getValue('card_button_text', Configuration::get('card_button_text'));
+        $helper->fields_value['ltp_expiration_days']       = intval(Tools::getValue('ltp_expiration_days', Configuration::get('ltp_expiration_days')));
+        $helper->fields_value['enable_installments']       = Tools::getValue('enable_installments', Configuration::get('enable_installments'));
 
         return $helper->generateForm($fieldsForm);
     }
@@ -451,17 +451,17 @@ class PG_Prestashop_Plugin extends PaymentModule
             }
 
             $app_code_server = Configuration::get('app_code_server');
-            $app_key_server = Configuration::get('app_key_server');
+            $app_key_server  = Configuration::get('app_key_server');
             $refund_data = [
                 "transaction" => ["id" => $transaction_id],
                 "order" => ["amount" => round($amount_to_refund, 2, PHP_ROUND_HALF_DOWN)]
             ];
             $payload = json_encode($refund_data);
 
-            $timestamp = (string)time();
+            $timestamp         = (string)time();
             $uniq_token_string = $app_key_server . $timestamp;
-            $uniq_token_hash = hash('sha256', $uniq_token_string);
-            $auth_token = base64_encode($app_code_server . ';' . $timestamp . ';' . $uniq_token_hash);
+            $uniq_token_hash   = hash('sha256', $uniq_token_string);
+            $auth_token        = base64_encode($app_code_server . ';' . $timestamp . ';' . $uniq_token_hash);
 
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -474,15 +474,15 @@ class PG_Prestashop_Plugin extends PaymentModule
             curl_close($ch);
             $get_response = json_decode($response, true);
             if ($get_response['error'] || $get_response['status'] == 'failure') {
-                $tab = Tools::getValue('tab');
+                $tab          = Tools::getValue('tab');
                 $currentIndex = __PS_BASE_URI__ . substr($_SERVER['SCRIPT_NAME'], strlen(__PS_BASE_URI__)) . ($tab ? '?tab=' . $tab : '');
-                $token = Tools::getAdminTokenLite($tab);
+                $token        = Tools::getAdminTokenLite($tab);
                 // TODO: Este reedirect no recarga la página actual, no c que pasa, parece tema del currentIndex
                 Tools::redirectLink($currentIndex . '&id_order=' . $order->id . '&vieworder&conf=1&token=' . $token);
 
             } else {
                 // TODO: Agregar a un helper? change_order_history() o algo así
-                $history = new OrderHistory();
+                $history           = new OrderHistory();
                 $history->id_order = (int)$order->id;
                 $history->changeIdOrderState(7, (int)($order->id));
                 $history->save();
@@ -526,7 +526,7 @@ class PG_Prestashop_Plugin extends PaymentModule
         $webhook_name = strtolower(FLAVOR.'webhook');
         return array(
             $webhook_name => array(
-                'description' => FLAVOR.' Webhook Management.',
+                'description'         => FLAVOR.' Webhook Management.',
                 'specific_management' => true
             )
         );

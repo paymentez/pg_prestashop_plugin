@@ -15,6 +15,10 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
         }
     }
 
+    /**
+     * @throws PrestaShopException
+     * @throws Exception
+     */
     public function initContent()
     {
         parent::initContent();
@@ -22,7 +26,6 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
         $cart = $this->context->cart;
         $customer = $this->context->customer;
         $total = (float)$cart->getOrderTotal(true, Cart::BOTH);
-        $vat = (float)0.0;
         $products = $cart->getProducts();
         $order_products = [];
         foreach ($products as $product)
@@ -35,17 +38,17 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
         $checkout_language = $this->mapCheckoutLanguage(Configuration::get('checkout_language'));
         $environment = $this->mapEnvironment(Configuration::get('environment'));
         $this->context->smarty->assign([
-            'app_code' => Configuration::get('app_code_client'),
-            'app_key' => Configuration::get('app_key_client'),
+            'app_code'          => Configuration::get('app_code_client'),
+            'app_key'           => Configuration::get('app_key_client'),
             'checkout_language' => $checkout_language,
-            'environment' => $environment,
-            'user_id' =>  $cart->id_customer,
-            'user_email' => $customer->email,
+            'environment'       => $environment,
+            'user_id'           =>  $cart->id_customer,
+            'user_email'        => $customer->email,
             'order_description' => $order_description,
-            'order_amount' => $total,
-            'order_vat' => $vat,
-            'order_reference' => $cart->id,
-            'products' => $products
+            'order_amount'      => $total,
+            'order_vat'         => 0.0,
+            'order_reference'   => $cart->id,
+            'products'          => $products
         ]);
 
         $this->setTemplate('module:pg_prestashop_plugin/views/templates/front/payment.tpl');
@@ -103,12 +106,12 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
         }
     }
 
-    private function mapCheckoutLanguage($checkout_language)
+    private function mapCheckoutLanguage($checkout_language): string
     {
-        return  [1 => 'es', 2 => 'en', 3 => 'pt',][$checkout_language];
+        return  [1 => 'en', 2 => 'es', 3 => 'pt',][$checkout_language];
     }
 
-    private function mapEnvironment($environment)
+    private function mapEnvironment($environment): string
     {
         return [1 => 'stg', 2 => 'prod',][$environment];
     }
