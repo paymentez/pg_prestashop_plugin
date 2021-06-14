@@ -3,6 +3,8 @@
 <?php
 use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
+include_once(_PS_MODULE_DIR_.'pg_prestashop_plugin/classes/WebserviceSpecificManagementOrderWebhook.php');
+
 const FLAVOR = 'Paymentez';
 const FLAVOR_DOMAIN = 'paymentez.com';
 const REFUND_PATH = '/v2/transaction/refund/';
@@ -38,7 +40,8 @@ class PG_Prestashop_Plugin extends PaymentModule
             && $this->registerHook('header')
             && $this->registerHook('displayPaymentReturn')
             && $this->registerHook('actionProductCancel')
-            && $this->registerHook('paymentOptions');
+            && $this->registerHook('paymentOptions')
+            && $this->registerHook('addWebserviceResources');
     }
 
     public function uninstall()
@@ -495,7 +498,6 @@ class PG_Prestashop_Plugin extends PaymentModule
         );
     }
 
-
     public function hookDisplayPaymentReturn($params)
     {
         if (!$this->active) {
@@ -517,5 +519,16 @@ class PG_Prestashop_Plugin extends PaymentModule
             'module_gtw' => $this->displayName
         ));
         return $this->display(__FILE__, 'views/templates/hook/payment_return.tpl');
+    }
+
+    public function hookAddWebserviceResources()
+    {
+        $webhook_name = strtolower(FLAVOR.'webhook');
+        return array(
+            $webhook_name => array(
+                'description' => FLAVOR.' Webhook Management.',
+                'specific_management' => true
+            )
+        );
     }
 }
