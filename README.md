@@ -1,37 +1,40 @@
 # Paymentez Payment Gateway Plugin for Prestashop
 
-## 1.- Prerequisites
-### 1.1.- XAMPP, LAMPP, MAMPP, Bitnami or any PHP development environment
+## 1. Prerequisites
+### 1.1. XAMPP, LAMPP, MAMPP, Bitnami or any PHP development environment
 - XAMPP: https://www.apachefriends.org/download.html
 - LAMPP: https://www.apachefriends.org/download.html
 - MAMPP: https://www.mamp.info/en/mac/
 - Bitnami: https://bitnami.com/stack/prestashop
-### 1.2.- Prestashop
-If you already install the Bitnami option this steps can be omitted.
+### 1.2. Prestashop
+Warning, if you already install the Bitnami option this step can be omitted.
 
 Prestashop is an e-commerce solution, it's developed on PHP. Now the last stable version is the 1.7.X.
 - Download: https://www.prestashop.com/en/download
 - Install Guide: https://www.prestashop.com/en/blog/how-to-install-prestashop
 
-## 2.- Git Repository
+## 2. Git Repository
 You can download the current stable release from: https://github.com/paymentez/pg_prestashop_plugin/releases
 
-## 3.- Plugin Installation on Prestashop
-1. First, we need to downoload the current stable release of Paymentez Prestashop plugin from the previus step.
-2. We need to login to our Prestashop admin page.
-3. Now we click on **Improve -> Modules -> Module Manager**
-4. In the Module manager we click on the **Upload a mudule** button
-5. We click on **select file** or we can **Drop** the Paymentez Prestashop plugin folder on .zip or .rar format.
-6. We will wait until the **Installing module** screen changes to **Module installed!**.
-7. Now we can click on **Configure** button displayed on the screen or in the **Configure** button displayed on the **Payment** section on the **Module manager**.
-8. Inside of the **Payment Gateway Configurations** we need to configure or CLIENT/SERVER credentials provided by **Paymentez**, we can select the **Checkout Language** that will be displayed to the user, also we need to select an **Environment**, by default STG(Staging) is selected.
-9. Congrats! Now we have the Paymentez Prestashop plugin correctly configured.
+## 3. Plugin Installation on Prestashop
+1. First, we need to download the current stable release of Paymentez Prestashop plugin from the previus step.
+2. We need to unzip the file to get the pg_prestashop_plugin-2.0.0 folder.
+3. Now you rename the folder from **pg_prestashop_plugin-2.0.0** to **pg_prestashop_plugin**.
+4. Compress on zip format the folder to get a file called **pg_prestashop_plugin.zip**.
+5. We need to log in to our Prestashop admin page.
+6. Now we click on **Improve -> Modules -> Module Manager**
+7. In the Module manager we click on the **Upload a mudule** button
+8. We click on **select file**, or we can **Drop** the Paymentez Prestashop plugin folder on .zip or .rar format.
+9. We will wait until the **Installing module** screen changes to **Module installed!**.
+10. Now we can click on **Configure** button displayed on the screen or in the **Configure** button displayed on the **Payment** section on the **Module manager**.
+11. Inside the **Payment Gateway Configurations** we need to configure or CLIENT/SERVER credentials provided by **Paymentez**, we can select the **Checkout Language** that will be displayed to the user, also we need to select an **Environment**, by default STG(Staging) is selected.
+12. Congrats! Now we have the Paymentez Prestashop plugin correctly configured.
 
-## 4.- Considerations and Comments
-### 4.1.- Refunds
-- The **1.0.0** plugin version does not support the **Partial Refunds** by Prestashop. However the plugin supports **Standard Refunds** by Prestashop. 
-- The **Standard Refund** can be interpreted as a partial refund on Paymentez side, the success of the operation depends on the configured payment network accepting partial refunds.
-### 4.2.- Webhook
+## 4. Considerations and Comments
+### 4.1. Refunds
+- The **1.0.0** plugin version does not support the **Partial Refunds** by Prestashop. However, the plugin supports **Standard Refunds** by Prestashop. 
+- The **Standard Refund** can be interpreted as a partial refund on Paymentez side, a success refund operation depends on the configured payment network accepting partial refunds.
+### 4.2. Webhook
 The Paymentez Prestashop plugin has an internal webhook in order to keep updated the transactions statuses between Prestashop and Paymentez. You need to follow the next steps to configure the webhook:
   1. Login into the Prestashop Back-office.
   2. Navigate to Advance Parameters -> Web Services menu options to open the Web Services page.
