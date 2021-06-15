@@ -97,7 +97,7 @@
 
         function ltpRedirect() {
             let xhr = new XMLHttpRequest();
-            xhr.open("POST", "https://noccapi-stg.paymentez.com/linktopay/init_order/", true);
+            xhr.open("POST", "{$ltp_url}", true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.setRequestHeader('Auth-token', generateAuthToken());
             xhr.send(JSON.stringify({

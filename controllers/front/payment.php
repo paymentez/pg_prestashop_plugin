@@ -43,6 +43,7 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
             'app_key'           => Configuration::get('app_key_client'),
             'checkout_language' => $checkout_language,
             'environment'       => $environment,
+            'ltp_url'           => $this->mapLinkToPayUrl($environment),
             'user_id'           => $cart->id_customer,
             'user_email'        => $customer->email,
             'order_description' => $order_description,
@@ -143,5 +144,13 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
     private function mapEnvironment($environment): string
     {
         return [1 => 'stg', 2 => 'prod',][$environment];
+    }
+
+    private function mapLinkToPayUrl($environment): string
+    {
+        return [
+            'stg' => 'https://noccapi-stg.'.FLAVOR_DOMAIN.'/linktopay/init_order/',
+            'prod' => 'https://noccapi.'.FLAVOR_DOMAIN.'/linktopay/init_order/'
+        ][$environment];
     }
 }
