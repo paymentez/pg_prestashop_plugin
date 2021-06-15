@@ -79,7 +79,7 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
 
             if ($payment_method == 'LinkToPay')
             {
-                $this->module->validateOrder($cart->id, Configuration::get('PS_OS_WS_PAYMENT'), $total, $this->module->displayName, null, array(), $this->context->currency->id, false, $customer->secure_key);
+                $this->module->validateOrder($cart->id, Configuration::get('PS_OS_PREPARATION'), $total, $this->module->displayName, null, array(), $this->context->currency->id, false, $customer->secure_key);
 
                 $this->assignPaymentId($payment_id);
 
@@ -100,7 +100,7 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
             }
             elseif ($status == 'pending')
             {
-                $this->module->validateOrder($cart->id, Configuration::get('PS_OS_WS_PAYMENT'), $total, $this->module->displayName, null, array(), $this->context->currency->id, false, $customer->secure_key);
+                $this->module->validateOrder($cart->id, Configuration::get('PS_OS_PREPARATION'), $total, $this->module->displayName, null, array(), $this->context->currency->id, false, $customer->secure_key);
             }
             else
             {
