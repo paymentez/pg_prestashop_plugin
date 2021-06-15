@@ -190,7 +190,7 @@ class PG_Prestashop_Plugin extends PaymentModule
                         'query' => [
                             [
                                 'id_option' => 1,
-                                'name' => $this->l('Testing'),
+                                'name' => $this->l('Test'),
                             ],
                             [
                                 'id_option' => 2,

@@ -25,7 +25,7 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
 
         $cart = $this->context->cart;
         $customer = $this->context->customer;
-        $total = (float)$cart->getOrderTotal(true, Cart::BOTH);
+        $total = (float)$cart->getOrderTotal();
         $products = $cart->getProducts();
         $order_products = [];
         foreach ($products as $product)
@@ -36,7 +36,8 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
             $order_description = substr($order_description,0,240);
         }
         $checkout_language = $this->mapCheckoutLanguage(Configuration::get('checkout_language'));
-        $environment = $this->mapEnvironment(Configuration::get('environment'));
+        $environment       = $this->mapEnvironment(Configuration::get('environment'));
+
         $this->context->smarty->assign([
             'app_code'          => Configuration::get('app_code_client'),
             'app_key'           => Configuration::get('app_key_client'),
@@ -48,7 +49,12 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
             'order_amount'      => $total,
             'order_vat'         => 0.0,
             'order_reference'   => $cart->id,
-            'products'          => $products
+            'products'          => $products,
+            'user_firstname'    => $customer->firstname,
+            'user_lastname'     => $customer->lastname,
+            'currency'          => Currency::getIsoCodeById($cart->id_currency),
+            'expiration_days'   => Configuration::get('ltp_expiration_days'),
+            'order_url'         => Context::getContext()->shop->getBaseURL(true).'index.php?controller=order-confirmation&id_cart='.(int)$cart->id.'&id_module='.(int)$this->module->id.'&id_order='.$this->module->currentOrder.'&key='.$customer->secure_key
         ]);
 
         $this->setTemplate('module:pg_prestashop_plugin/views/templates/front/payment.tpl');

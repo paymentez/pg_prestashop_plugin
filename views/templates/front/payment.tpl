@@ -103,26 +103,27 @@
             xhr.setRequestHeader('Auth-token', generateAuthToken());
             xhr.send(JSON.stringify({
                 "user": {
-                    "id": "12345",
-                    "email": "svargas@paymentez.com",
-                    "name": "Sergio",
-                    "last_name": "Vargas"
+                    "id": "{$user_id}",
+                    "email": "{$user_email}",
+                    "name": "{$user_firstname}",
+                    "last_name": "{$user_lastname}"
                 },
                 "order": {
-                    "dev_reference": "123456",
-                    "description": "Esto es una prueba desde prestashop",
-                    "amount": 1,
+                    "dev_reference": "{$order_reference}",
+                    "description": "{$order_description}",
+                    "amount": Number("{$order_amount}"),
                     "installments_type": -1,
-                    "currency": "COP"
+                    "vat": Number("{$order_vat}"),
+                    "currency": "{$currency}"
                 },
                 "configuration": {
-                    "partial_payment": true,
-                    "expiration_days": 1,
+                    "partial_payment": false,
+                    "expiration_days": Number("{$ltp_expiration_days}"),
                     "allowed_payment_methods": ["All"],
-                    "success_url": "https://url-to-success.com",
-                    "failure_url": "https://url-to-failure.com",
-                    "pending_url": "https://url-to-pending.com",
-                    "review_url": "https://url-to-review.com"
+                    "success_url": "{$order_url}",
+                    "failure_url": "{$order_url}",
+                    "pending_url": "{$order_url}",
+                    "review_url": "{$order_url}"
                 }
             }));
             xhr.onload = function() {
@@ -140,7 +141,7 @@
 
         function showErrorMessage(message) {
             let errorMessage = "{l s='Failed to generate the LinkToPay, gateway response: ' mod='pg_prestashop_plugin'}";
-            window.alert(errorMessage + message);
+            window.alert(errorMessage + JSON.stringify(message));
         }
     </script>
 
