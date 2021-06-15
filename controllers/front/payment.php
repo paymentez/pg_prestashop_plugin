@@ -77,8 +77,11 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
             $status         = Tools::getValue('status');
             $payment_method = Tools::getValue('payment_method');
 
-            if ($payment_method == 'LinkToPay') {
+            if ($payment_method == 'LinkToPay')
+            {
                 $this->module->validateOrder($cart->id, Configuration::get('PS_OS_WS_PAYMENT'), $total, $this->module->displayName, null, array(), $this->context->currency->id, false, $customer->secure_key);
+
+                $this->assignPaymentId($payment_id);
 
                 $payment_url    = Tools::getValue('payment_url');
                 $this->context->smarty->assign([
@@ -104,19 +107,8 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
                 $this->module->validateOrder($cart->id, Configuration::get('PS_OS_ERROR'), $total, $this->module->displayName, null, array(), $this->context->currency->id, false, $customer->secure_key);
             }
 
-            $order = new Order($this->module->currentOrder);
-            $collection = OrderPayment::getByOrderReference($order->reference);
-            if (count($collection) > 0)
-            {
-                foreach ($collection as $order_payment)
-                {
-                    if ($order_payment->payment_method == FLAVOR . ' Prestashop Plugin')
-                    {
-                        $order_payment->transaction_id = $payment_id;
-                        $order_payment->update();
-                    }
-                }
-            }
+            $this->assignPaymentId($payment_id);
+
             $this->context->smarty->assign([
                 'pg_status'      => $status,
                 'payment_id'     => $payment_id,
@@ -124,6 +116,22 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
                 'payment_method' => $payment_method
             ]);
             Tools::redirect('index.php?controller=order-confirmation&id_cart='.(int)$cart->id.'&id_module='.(int)$this->module->id.'&id_order='.$this->module->currentOrder.'&key='.$customer->secure_key);
+        }
+    }
+
+    private function assignPaymentId($payment_id) {
+        $order      = new Order($this->module->currentOrder);
+        $collection = OrderPayment::getByOrderReference($order->reference);
+        if (count($collection) > 0)
+        {
+            foreach ($collection as $order_payment)
+            {
+                if ($order_payment->payment_method == FLAVOR . ' Prestashop Plugin')
+                {
+                    $order_payment->transaction_id = $payment_id;
+                    $order_payment->update();
+                }
+            }
         }
     }
 

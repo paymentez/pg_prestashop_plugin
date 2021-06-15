@@ -57,15 +57,21 @@ class WebserviceSpecificManagementPaymentezWebhook implements WebserviceSpecific
         return $this;
     }
 
+    /**
+     * @throws PrestaShopException
+     * @throws PrestaShopDatabaseException
+     * @throws WebserviceException
+     */
     public function manage()
     {
         $this->wsObject->setOutputEnabled(true);
-        $requestBody = file_get_contents('php://input');
-        $requestBodyJs = json_decode($requestBody, true);
 
-        $status_detail = $requestBodyJs["transaction"]['status_detail'] ?? 999;
-        $dev_reference = $requestBodyJs["transaction"]['dev_reference'];
-        $pg_stoken = $requestBodyJs["transaction"]['stoken'];
+        $requestBody      = file_get_contents('php://input');
+        $requestBodyJs    = json_decode($requestBody, true);
+        $transaction_id   = $requestBodyJs["transaction"]['id'];
+        $status_detail    = $requestBodyJs["transaction"]['status_detail'] ?? 999;
+        $dev_reference    = $requestBodyJs["transaction"]['dev_reference'];
+        $pg_stoken        = $requestBodyJs["transaction"]['stoken'];
         $application_code = $requestBodyJs["transaction"]['application_code'];
 
         $orderId = Order::getIdByCartId($dev_reference);
@@ -87,7 +93,6 @@ class WebserviceSpecificManagementPaymentezWebhook implements WebserviceSpecific
                         Configuration::get('app_code_server') => Configuration::get('app_key_server'),
                     ];
                     // TODO: Meter todo esto en una funcion validateStoken()
-                    $transaction_id = $order_payment->transaction_id;
                     $app_code = $application_code;
                     $app_key = $codes_keys[$app_code];
                     $user_id = $order->id_customer;
@@ -97,24 +102,24 @@ class WebserviceSpecificManagementPaymentezWebhook implements WebserviceSpecific
                         throw new WebserviceException('Stoken invalid', [1, 401]);
                     }
                     $history = new OrderHistory();
-                    $history->id_order = (int)$order->id;
-                    $status = map_status((int)$status_detail);
-                    $history->changeIdOrderState($status, (int)($order->id));
+                    $history->id_order = $order->id;
+                    $status = $this->map_status((int)$status_detail);
+                    $history->changeIdOrderState($status, $order->id);
                     $history->save();
                     $this->objOutput->setStatus(200);
                 }
             }
         }
+    }
 
-        function map_status($status_detail): int
-        {
-            $pg_status_ps = [
-                0 => 3, // “Processing in progress”
-                3 => 2, // “Payment accepted”
-                7 => 7, // “Refunded”
-                8 => 13, // “Awaiting Cash On Delivery validation” (chargeback)
-            ];
-            return $pg_status_ps[$status_detail] ?? 8; // 8 => "Payment Error"
-        }
+    private function map_status($status_detail): int
+    {
+        $pg_status_ps = [
+            0 => 3, // “Processing in progress”
+            3 => 2, // “Payment accepted”
+            7 => 7, // “Refunded”
+            8 => 13, // “Awaiting Cash On Delivery validation” (chargeback)
+        ];
+        return $pg_status_ps[$status_detail] ?? 8; // 8 => "Payment Error"
     }
 }
