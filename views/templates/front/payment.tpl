@@ -87,7 +87,6 @@
     <div id="response"></div>
 
     <script id="payment_ltp" type="text/javascript">
-
         function generateAuthToken() {
             let timestamp = (new Date()).getTime();
             let key_time = "{$app_key}" + timestamp;
@@ -128,13 +127,12 @@
             }));
             xhr.onload = function() {
                 let data = JSON.parse(this.responseText);
-                console.log(data);
                 if (!data.hasOwnProperty('success')) {
                     showErrorMessage(this.responseText)
                 } else if (!data['success']) {
                     showErrorMessage(data['detail'] ?? this.responseText)
                 } else {
-                    window.location = data['data']['payment']['payment_url'];
+                    redirectPost(data['data']);
                 }
             }
         }
@@ -142,6 +140,29 @@
         function showErrorMessage(message) {
             let errorMessage = "{l s='Failed to generate the LinkToPay, gateway response: ' mod='pg_prestashop_plugin'}";
             window.alert(errorMessage + JSON.stringify(message));
+        }
+
+        function redirectPost(params) {
+            params['payment']['payment_method'] = 'LinkToPay';
+            params['payment']['id'] = params['order']['id'];
+            params['payment']['amount'] = params['order']['amount'];
+
+            const form = document.createElement('form');
+            form.method = 'post';
+            for (const key in params) {
+                if (params.hasOwnProperty(key) && key === 'payment') {
+                    for (const t_key in params[key]) {
+                        const hiddenField = document.createElement('input');
+                        hiddenField.type = 'hidden';
+                        hiddenField.name = t_key;
+                        hiddenField.value = params[key][t_key];
+                        form.appendChild(hiddenField);
+                    }
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
         }
     </script>
 
@@ -151,7 +172,7 @@
                 client_app_code: "{$app_code}",
                 client_app_key: "{$app_key}",
                 locale: "{$checkout_language}",
-                env_mode: "local",
+                env_mode: "{$environment}",
                 onOpen: function () {
                     console.log('modal open');
                 },
@@ -194,7 +215,11 @@
 
             function showMessageSuccess(params) {
                 console.log("success");
+                redirectPost(params);
+            }
 
+            function redirectPost(params) {
+                params['transaction']['payment_method'] = 'Card';
                 const form = document.createElement('form');
                 form.method = 'post';
 

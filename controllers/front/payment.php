@@ -69,13 +69,27 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
     {
         if (!empty($_POST))
         {
-            $amount     = Tools::getValue('amount');
-            $payment_id = Tools::getValue('id');
-            $status     = Tools::getValue('status');
-            $total      = (float)$amount;
+            $cart           = $this->context->cart;
+            $customer       = new Customer($cart->id_customer);
 
-            $cart       = $this->context->cart;
-            $customer   = new Customer($cart->id_customer);
+            $total          = (float)Tools::getValue('amount');
+            $payment_id     = Tools::getValue('id');
+            $status         = Tools::getValue('status');
+            $payment_method = Tools::getValue('payment_method');
+
+            if ($payment_method == 'LinkToPay') {
+                $this->module->validateOrder($cart->id, Configuration::get('PS_OS_WS_PAYMENT'), $total, $this->module->displayName, null, array(), $this->context->currency->id, false, $customer->secure_key);
+
+                $payment_url    = Tools::getValue('payment_url');
+                $this->context->smarty->assign([
+                    'pg_status'      => 'pending',
+                    'payment_id'     => Tools::getValue('id'),
+                    'module_gtw'     => $this->module->displayName,
+                    'payment_method' => $payment_method,
+                    'payment_url'    => $payment_url
+                ]);
+                Tools::redirect($payment_url);
+            }
 
             if ($status == 'success')
             {
@@ -83,7 +97,7 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
             }
             elseif ($status == 'pending')
             {
-                $this->module->validateOrder($cart->id, Configuration::get('PS_OS_PREPARATION'), $total, $this->module->displayName, null, array(), $this->context->currency->id, false, $customer->secure_key);
+                $this->module->validateOrder($cart->id, Configuration::get('PS_OS_WS_PAYMENT'), $total, $this->module->displayName, null, array(), $this->context->currency->id, false, $customer->secure_key);
             }
             else
             {
@@ -104,9 +118,10 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
                 }
             }
             $this->context->smarty->assign([
-                'pg_status'  => $status,
-                'payment_id' => $payment_id,
-                'module_gtw' => $this->module->displayName
+                'pg_status'      => $status,
+                'payment_id'     => $payment_id,
+                'module_gtw'     => $this->module->displayName,
+                'payment_method' => $payment_method
             ]);
             Tools::redirect('index.php?controller=order-confirmation&id_cart='.(int)$cart->id.'&id_module='.(int)$this->module->id.'&id_order='.$this->module->currentOrder.'&key='.$customer->secure_key);
         }
