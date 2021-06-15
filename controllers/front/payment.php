@@ -42,7 +42,7 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
             'app_key'           => Configuration::get('app_key_client'),
             'checkout_language' => $checkout_language,
             'environment'       => $environment,
-            'user_id'           =>  $cart->id_customer,
+            'user_id'           => $cart->id_customer,
             'user_email'        => $customer->email,
             'order_description' => $order_description,
             'order_amount'      => $total,
