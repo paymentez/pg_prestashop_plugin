@@ -34,65 +34,22 @@ class PG_Prestashop_Plugin extends PaymentModule
         parent::__construct();
     }
 
-    /**
-     * @throws PrestaShopDatabaseException
-     * @throws PrestaShopException
-     */
-    public function install()
+    public function install(): bool
     {
         return parent::install()
             && $this->registerHook('header')
             && $this->registerHook('displayPaymentReturn')
             && $this->registerHook('actionProductCancel')
             && $this->registerHook('paymentOptions')
-            && $this->registerHook('addWebserviceResources')
-            && $this->addOrderState($this->l('Pending for Remote Payment')) ;
+            && $this->registerHook('addWebserviceResources');
     }
 
-    public function uninstall()
+    public function uninstall(): bool
     {
         return parent::uninstall();
     }
 
-    /**
-     * @throws PrestaShopDatabaseException
-     * @throws PrestaShopException
-     */
-    public function addOrderState($name): bool
-    {
-        $state_exist = false;
-        $states = OrderState::getOrderStates((int)$this->context->language->id);
-
-        // check if order state exist
-        foreach ($states as $state) {
-            if (in_array($name, $state)) {
-                $state_exist = true;
-                break;
-            }
-        }
-
-        // If the state does not exist, we create it.
-        if (!$state_exist) {
-            // create new order state
-            $order_state = new OrderState();
-            $order_state->color = '#34209E';
-            // TODO: Email for LTP
-            $order_state->send_email = false;
-            $order_state->module_name = $this->name;
-            $order_state->name = array();
-            $languages = Language::getLanguages(false);
-            foreach ($languages as $language)
-                $order_state->name[ $language['id_lang'] ] = $name;
-
-            // Update object
-            $order_state->add();
-        }
-
-        return true;
-    }
-
-
-    public function getContent()
+    public function getContent(): string
     {
         $output = null;
         $error_messages = [];
