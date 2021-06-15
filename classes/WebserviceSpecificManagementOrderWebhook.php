@@ -66,6 +66,8 @@ class WebserviceSpecificManagementPaymentezWebhook implements WebserviceSpecific
     {
         $this->wsObject->setOutputEnabled(true);
 
+        echo Configuration::get('a');
+
         $requestBody      = file_get_contents('php://input');
         $requestBodyJs    = json_decode($requestBody, true);
         $transaction_id   = $requestBodyJs["transaction"]['id'];
@@ -115,7 +117,7 @@ class WebserviceSpecificManagementPaymentezWebhook implements WebserviceSpecific
     private function map_status($status_detail): int
     {
         $pg_status_ps = [
-            0 => 3, // “Processing in progress”
+            0 => 10, // “Awaiting”
             3 => 2, // “Payment accepted”
             7 => 7, // “Refunded”
             8 => 13, // “Awaiting Cash On Delivery validation” (chargeback)
