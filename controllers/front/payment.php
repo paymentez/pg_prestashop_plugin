@@ -55,7 +55,10 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
             'user_lastname'     => $customer->lastname,
             'currency'          => Currency::getIsoCodeById($cart->id_currency),
             'expiration_days'   => Configuration::get('ltp_expiration_days'),
-            'order_url'         => Context::getContext()->shop->getBaseURL(true).'index.php?controller=order-confirmation&id_cart='.(int)$cart->id.'&id_module='.(int)$this->module->id.'&id_order='.$this->module->currentOrder.'&key='.$customer->secure_key
+            'order_url'         => Context::getContext()->shop->getBaseURL(true).'index.php?controller=order-confirmation&id_cart='.(int)$cart->id.'&id_module='.(int)$this->module->id.'&id_order='.$this->module->currentOrder.'&key='.$customer->secure_key,
+            'ltp_button_text'   => Configuration::get('ltp_button_text'),
+            'card_button_text'  => Configuration::get('card_button_text'),
+            'enable_installments' => Configuration::get('enable_installments'),
         ]);
 
         $this->setTemplate('module:pg_prestashop_plugin/views/templates/front/payment.tpl');

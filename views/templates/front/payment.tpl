@@ -17,13 +17,13 @@
             <button class="btn btn-primary btn-block js-payment-checkout">
                 <i class="material-icons">done</i>
                 <span>
-                    {l s='Purchase' mod='pg_prestashop_plugin'}
+                    {$card_button_text}
                 </span>
             </button>
-            <button class="btn btn-primary btn-block" onclick="ltpRedirect()">
+            <button class="btn btn-primary btn-block ltp-button" onclick="ltpRedirect()">
                 <i class="material-icons">done</i>
                 <span>
-                    {l s='LinkToPay' mod='pg_prestashop_plugin'}
+                    {$ltp_button_text}
                 </span>
             </button>
         </div>
@@ -72,13 +72,13 @@
             <button class="btn btn-primary btn-block js-payment-checkout">
                 <i class="material-icons">done</i>
                 <span>
-                    {l s='Purchase' mod='pg_prestashop_plugin'}
+                    {$card_button_text}
                 </span>
             </button>
-            <button class="btn btn-primary btn-block" onclick="ltpRedirect()">
+            <button class="btn btn-primary btn-block ltp-button" onclick="ltpRedirect()">
                 <i class="material-icons">done</i>
                 <span>
-                    {l s='LinkToPay' mod='pg_prestashop_plugin'}
+                    {$ltp_button_text}
                 </span>
             </button>
         </div>
