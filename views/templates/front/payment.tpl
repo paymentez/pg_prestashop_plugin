@@ -13,20 +13,6 @@
                 </span>
             </h3>
         </div>
-        <div class="col-sm-5 col-lg-3">
-            <button class="btn btn-primary btn-block js-payment-checkout">
-                <i class="material-icons">done</i>
-                <span>
-                    {$card_button_text}
-                </span>
-            </button>
-            <button class="btn btn-primary btn-block ltp-button" onclick="ltpRedirect()">
-                <i class="material-icons">done</i>
-                <span>
-                    {$ltp_button_text}
-                </span>
-            </button>
-        </div>
     </div>
     <hr>
     <div class="row">
@@ -69,6 +55,12 @@
         <div class="col-sm-7 col-lg-9">
         </div>
         <div class="col-sm-5 col-lg-3">
+            <div class="btn-block" id="installments_div">
+                <select class="btn btn-outline-primary dropdown-toggle" name="installments_type" id="installments_type">
+                    <option selected disabled>Installments Type:</option>
+                    <option value=-1>Without Installments</option>
+                </select>
+            </div>
             <button class="btn btn-primary btn-block js-payment-checkout">
                 <i class="material-icons">done</i>
                 <span>

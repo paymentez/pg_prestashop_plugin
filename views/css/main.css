@@ -40,7 +40,7 @@
 }
 
 .js-payment-checkout {
-  text-align: center;
+  text-align: left;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -50,68 +50,11 @@
 }
 
 .ltp-button {
-  text-align: center;
+  text-align: left;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 500;
   cursor: pointer;
   float: left;
-}
-
-/* Reset Select */
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  outline: 0;
-  box-shadow: none;
-  border: 0 !important;
-  background: #0fbd71 none;
-  text-transform: uppercase;
-}
-/* Remove IE arrow */
-select::-ms-expand {
-  display: none;
-}
-/* Custom Select */
-.select {
-  position: relative;
-  display: flex;
-  width: 20em;
-  height:53px;
-  line-height: 3;
-  background: #0fbd71;
-  overflow: hidden;
-  border-radius: 4px;
-  margin-right: 10px;
-  margin-bottom: 20px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  border: 1px solid #9c9c9c;
-  font-size: 14px;
-}
-select {
-  flex: 1;
-  padding: 0 .5em;
-  color: #fff;
-  cursor: pointer;
-}
-/* Arrow */
-.select::after {
-  content: '\25BC';
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0 1em;
-  background: #0fbd71;
-  cursor: pointer;
-  pointer-events: none;
-  -webkit-transition: .25s all ease;
-  -o-transition: .25s all ease;
-  transition: .25s all ease;
-}
-/* Transition */
-.select:hover::after {
-  color: #BD0F5B;
 }
