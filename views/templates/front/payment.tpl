@@ -57,8 +57,8 @@
         <div class="col-sm-5 col-lg-3">
             {if $enable_installments}
             <select class="btn btn-outline-primary dropdown-toggle btn-block" name="installments_type" id="installments_type">
-                <option selected disabled>Installments Type:</option>
-                <option value=-1>Without Installments</option>
+                <option selected disabled>{l s='Installments Type:' mod='pg_prestashop_plugin'}</option>
+                <option value=-1>{l s='Without Installments' mod='pg_prestashop_plugin'}</option>
                 {foreach $installments_options as $value => $text}
                     <option value={$value}>{$text}</option>
                 {/foreach}
