@@ -55,12 +55,13 @@
         <div class="col-sm-7 col-lg-9">
         </div>
         <div class="col-sm-5 col-lg-3">
-            <div class="btn-block" id="installments_div">
-                <select class="btn btn-outline-primary dropdown-toggle" name="installments_type" id="installments_type">
-                    <option selected disabled>Installments Type:</option>
-                    <option value=-1>Without Installments</option>
-                </select>
-            </div>
+            <select class="btn btn-outline-primary dropdown-toggle btn-block" name="installments_type" id="installments_type">
+                <option selected disabled>Installments Type:</option>
+                <option value=-1>Without Installments</option>
+                {foreach $installments_options as $value => $text}
+                    <option value={$value}>{$text}</option>
+                {/foreach}
+            </select>
             <button class="btn btn-primary btn-block js-payment-checkout">
                 <i class="material-icons">done</i>
                 <span>
@@ -192,9 +193,7 @@
                         order_amount: Number("{$order_amount}"),
                         order_vat: Number("{$order_vat}"),
                         order_reference: "{$order_reference}",
-                        //order_installments_type: 2, // optional: For Colombia an Brazil to show installments should be 0, For Ecuador the valid values are: https://paymentez.github.io/api-doc/#payment-methods-cards-debit-with-token-installments-type
-                        //order_taxable_amount: 0, // optional: Only available for Ecuador. The taxable amount, if it is zero, it is calculated on the total. Format: Decimal with two fraction digits.
-                        //order_tax_percentage: 10 // optional: Only available for Ecuador. The tax percentage to be applied to this order.
+                        order_installments_type: Number(document.getElementById('installments_type').value),
                     });
                 })
             }

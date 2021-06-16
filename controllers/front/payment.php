@@ -59,6 +59,7 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
             'ltp_button_text'   => Configuration::get('ltp_button_text'),
             'card_button_text'  => Configuration::get('card_button_text'),
             'enable_installments' => Configuration::get('enable_installments'),
+            'installments_options' => $this->getInstallmentsOptions()
         ]);
 
         $this->setTemplate('module:pg_prestashop_plugin/views/templates/front/payment.tpl');
@@ -155,5 +156,31 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
             'stg' => 'https://noccapi-stg.'.FLAVOR_DOMAIN.'/linktopay/init_order/',
             'prod' => 'https://noccapi.'.FLAVOR_DOMAIN.'/linktopay/init_order/'
         ][$environment];
+    }
+
+    private function getInstallmentsOptions(): array
+    {
+        return [
+            1  => $this->module->l('Revolving and deferred without interest (The bank will pay to the commerce the installment, month by month)(Ecuador)'),
+            2  => $this->module->l('Deferred with interest (Ecuador, México)'),
+            3  => $this->module->l('Deferred without interest (Ecuador, México)'),
+            7  => $this->module->l('Deferred with interest and months of grace (Ecuador)'),
+            6  => $this->module->l('Deferred without interest pay month by month (Ecuador)(Medianet)'),
+            9  => $this->module->l('Deferred without interest and months of grace (Ecuador, México)'),
+            10 => $this->module->l('Deferred without interest promotion bimonthly (Ecuador)(Medianet)'),
+            21 => $this->module->l('For Diners Club exclusive, deferred with and without interest (Ecuador)'),
+            22 => $this->module->l('For Diners Club exclusive, deferred with and without interest (Ecuador)'),
+            30 => $this->module->l('Deferred with interest pay month by month (Ecuador)(Medianet)'),
+            50 => $this->module->l('Deferred without interest promotions (Supermaxi)(Ecuador)(Medianet)'),
+            51 => $this->module->l('Deferred with interest (Cuota fácil)(Ecuador)(Medianet)'),
+            52 => $this->module->l('Without interest (Rendecion Produmillas)(Ecuador)(Medianet)'),
+            53 => $this->module->l('Without interest sale with promotions (Ecuador)(Medianet)'),
+            70 => $this->module->l('Deferred special without interest (Ecuador)(Medianet)'),
+            72 => $this->module->l('Credit without interest (cte smax)(Ecuador)(Medianet)'),
+            73 => $this->module->l('Special credit without interest (smax)(Ecuador)(Medianet)'),
+            74 => $this->module->l('Prepay without interest (smax)(Ecuador)(Medianet)'),
+            75 => $this->module->l('Defered credit without interest (smax)(Ecuador)(Medianet)'),
+            90 => $this->module->l('Without interest with months of grace (Supermaxi)(Ecuador)(Medianet)'),
+        ];
     }
 }
