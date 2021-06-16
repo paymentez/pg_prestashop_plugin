@@ -55,6 +55,7 @@
         <div class="col-sm-7 col-lg-9">
         </div>
         <div class="col-sm-5 col-lg-3">
+            {if $enable_installments}
             <select class="btn btn-outline-primary dropdown-toggle btn-block" name="installments_type" id="installments_type">
                 <option selected disabled>Installments Type:</option>
                 <option value=-1>Without Installments</option>
@@ -62,18 +63,23 @@
                     <option value={$value}>{$text}</option>
                 {/foreach}
             </select>
+            {/if}
+            {if $enable_card}
             <button class="btn btn-primary btn-block js-payment-checkout">
                 <i class="material-icons">done</i>
                 <span>
                     {$card_button_text}
                 </span>
             </button>
+            {/if}
+            {if $enable_ltp}
             <button class="btn btn-primary btn-block ltp-button" onclick="ltpRedirect()">
                 <i class="material-icons">done</i>
                 <span>
                     {$ltp_button_text}
                 </span>
             </button>
+            {/if}
         </div>
     </div>
 

@@ -121,25 +121,33 @@ class PG_Prestashop_Plugin extends PaymentModule
                 Configuration::updateValue('checkout_language', $checkout_language);
             }
 
-            $payment_methods_enabled = [
-                Tools::getValue('payment_methods_enabled_1'), Tools::getValue('payment_methods_enabled_2')
-            ];
-            if (!$payment_methods_enabled[0] and !$payment_methods_enabled[1]) {
-                array_push($error_messages, $this->l('Invalid Payment Methods Enabled Configuration Value'));
-            } else {
-                if ($payment_methods_enabled[0]) {
-                    Configuration::updateValue('payment_methods_enabled_1', $payment_methods_enabled[0]);
-                }
-                if ($payment_methods_enabled[1]) {
-                    Configuration::updateValue('payment_methods_enabled_2', $payment_methods_enabled[1]);
-                }
+            $enable_card = strval(Tools::getValue('enable_card'));
+            Configuration::updateValue('enable_card', $enable_card);
+
+            $enable_ltp = strval(Tools::getValue('enable_ltp'));
+            Configuration::updateValue('enable_ltp', $enable_ltp);
+
+            if (!$enable_card && !$enable_ltp) {
+                array_push($error_messages, $this->l('You must select at least one payment method.'));
             }
 
             $card_button_text = strval(Tools::getValue('card_button_text'));
+            if (!$card_button_text ||
+                empty($card_button_text) ||
+                !Validate::isGenericName($card_button_text)
+            ) {
+                $card_button_text = $this->l("Pay With Card");
+            }
             Configuration::updateValue('card_button_text', $card_button_text);
 
-            $card_button_text = strval(Tools::getValue('ltp_button_text'));
-            Configuration::updateValue('ltp_button_text', $card_button_text);
+            $ltp_button_text = strval(Tools::getValue('ltp_button_text'));
+            if (!$ltp_button_text ||
+                empty($ltp_button_text) ||
+                !Validate::isGenericName($ltp_button_text)
+            ) {
+                $ltp_button_text = $this->l("Pay With LinkToPay");
+            }
+            Configuration::updateValue('ltp_button_text', $ltp_button_text);
 
             $ltp_expiration_days = intval(Tools::getValue('ltp_expiration_days'));
             if (
@@ -255,27 +263,46 @@ class PG_Prestashop_Plugin extends PaymentModule
                     ]
                 ],
                 [
-                    'type'      => 'checkbox',
-                    'label'     => $this->l('Payment Methods Enabled:'),
-                    'desc'      => $this->l('Select at least 1 payment method for the user payment.'),
-                    'name'      => 'payment_methods_enabled',
+                    'type'      => 'select',
+                    'label'     => $this->l('Enable Card Payment:'),
+                    'desc'      => $this->l('If selected, card can be used to pay.'),
+                    'name'      => 'enable_card',
                     'required'  => true,
-                    'values'    => [
+                    'options'   => [
                         'query' => [
                             [
-                                'id_option' => 1,
-                                'name'      => $this->l('Card'),
-                                'val'       => 1
+                                'id_option' => 0,
+                                'name'      => 'Disabled',
                             ],
                             [
-                                'id_option' => 2,
-                                'name'      => $this->l('LinkToPay'),
-                                'val'       => 2
+                                'id_option' => 1,
+                                'name'      => 'Enabled',
                             ],
                         ],
                         'id'    => 'id_option',
                         'name'  => 'name',
-                    ],
+                    ]
+                ],
+                [
+                    'type'      => 'select',
+                    'label'     => $this->l('Enable LinkToPay:'),
+                    'desc'      => $this->l('If selected, LinkToPay can be used to pay.'),
+                    'name'      => 'enable_ltp',
+                    'required'  => true,
+                    'options'   => [
+                        'query' => [
+                            [
+                                'id_option' => 0,
+                                'name'      => 'Disabled',
+                            ],
+                            [
+                                'id_option' => 1,
+                                'name'      => 'Enabled',
+                            ],
+                        ],
+                        'id'    => 'id_option',
+                        'name'  => 'name',
+                    ]
                 ],
                 [
                     'type'     => 'text',
@@ -356,18 +383,18 @@ class PG_Prestashop_Plugin extends PaymentModule
         ];
 
         // Load currents values
-        $helper->fields_value['app_code_client']           = Tools::getValue('app_code_client', Configuration::get('app_code_client'));
-        $helper->fields_value['app_key_client']            = Tools::getValue('app_key_client', Configuration::get('app_key_client'));
-        $helper->fields_value['app_code_server']           = Tools::getValue('app_code_server', Configuration::get('app_code_server'));
-        $helper->fields_value['app_key_server']            = Tools::getValue('app_key_server', Configuration::get('app_key_server'));
-        $helper->fields_value['checkout_language']         = Tools::getValue('checkout_language', Configuration::get('checkout_language'));
-        $helper->fields_value['environment']               = Tools::getValue('environment', Configuration::get('environment'));
-        $helper->fields_value['payment_methods_enabled_1'] = Tools::getValue('payment_methods_enabled_1',  Configuration::get('payment_methods_enabled_1'));
-        $helper->fields_value['payment_methods_enabled_2'] = Tools::getValue('payment_methods_enabled_2',  Configuration::get('payment_methods_enabled_2'));
-        $helper->fields_value['ltp_button_text']           = Tools::getValue('ltp_button_text', Configuration::get('ltp_button_text'));
-        $helper->fields_value['card_button_text']          = Tools::getValue('card_button_text', Configuration::get('card_button_text'));
-        $helper->fields_value['ltp_expiration_days']       = intval(Tools::getValue('ltp_expiration_days', Configuration::get('ltp_expiration_days')));
-        $helper->fields_value['enable_installments']       = Tools::getValue('enable_installments', Configuration::get('enable_installments'));
+        $helper->fields_value['app_code_client']     = Tools::getValue('app_code_client', Configuration::get('app_code_client'));
+        $helper->fields_value['app_key_client']      = Tools::getValue('app_key_client', Configuration::get('app_key_client'));
+        $helper->fields_value['app_code_server']     = Tools::getValue('app_code_server', Configuration::get('app_code_server'));
+        $helper->fields_value['app_key_server']      = Tools::getValue('app_key_server', Configuration::get('app_key_server'));
+        $helper->fields_value['checkout_language']   = Tools::getValue('checkout_language', Configuration::get('checkout_language'));
+        $helper->fields_value['environment']         = Tools::getValue('environment', Configuration::get('environment'));
+        $helper->fields_value['enable_card']         = Tools::getValue('enable_card',  Configuration::get('enable_card'));
+        $helper->fields_value['enable_ltp']          = Tools::getValue('enable_ltp',  Configuration::get('enable_ltp'));
+        $helper->fields_value['ltp_button_text']     = Tools::getValue('ltp_button_text', Configuration::get('ltp_button_text'));
+        $helper->fields_value['card_button_text']    = Tools::getValue('card_button_text', Configuration::get('card_button_text'));
+        $helper->fields_value['ltp_expiration_days'] = intval(Tools::getValue('ltp_expiration_days', Configuration::get('ltp_expiration_days')));
+        $helper->fields_value['enable_installments'] = Tools::getValue('enable_installments', Configuration::get('enable_installments'));
 
         return $helper->generateForm($fieldsForm);
     }
