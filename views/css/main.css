@@ -38,3 +38,23 @@
     margin: 1em 0;
   }
 }
+
+.js-payment-checkout {
+  text-align: left;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  cursor: pointer;
+  float: left;
+}
+
+.ltp-button {
+  text-align: left;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  cursor: pointer;
+  float: left;
+}
