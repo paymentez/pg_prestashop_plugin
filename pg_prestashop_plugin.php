@@ -3,7 +3,7 @@
 <?php
 use PrestaShop\PrestaShop\Core\Payment\PaymentOption;
 
-include_once(_PS_MODULE_DIR_.'pg_prestashop_plugin/classes/WebserviceSpecificManagementOrderWebhook.php');
+include_once(_PS_MODULE_DIR_.'pg_prestashop_plugin/classes/WebserviceSpecificManagementPaymentezWebhook.php');
 
 const FLAVOR = 'Paymentez';
 const FLAVOR_DOMAIN = 'paymentez.com';
