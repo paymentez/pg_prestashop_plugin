@@ -66,8 +66,6 @@ class WebserviceSpecificManagementPaymentezWebhook implements WebserviceSpecific
     {
         $this->wsObject->setOutputEnabled(true);
 
-        echo Configuration::get('a');
-
         $requestBody      = file_get_contents('php://input');
         $requestBodyJs    = json_decode($requestBody, true);
         $transaction_id   = $requestBodyJs["transaction"]['id'];
