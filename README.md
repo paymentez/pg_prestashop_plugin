@@ -32,7 +32,7 @@ You can download the current stable release from: https://github.com/paymentez/p
 
 ## 4. Considerations and Comments
 ### 4.1. Refunds
-- The **1.0.0** plugin version does not support the **Partial Refunds** by Prestashop. However, the plugin supports **Standard Refunds** by Prestashop. 
+- The **2.0.0** plugin version does not support the **Partial Refunds** by Prestashop. However, the plugin supports **Standard Refunds** by Prestashop. 
 - The **Standard Refund** can be interpreted as a partial refund on Paymentez side, a success refund operation depends on the configured payment network accepting partial refunds.
 ### 4.2. Webhook
 The Paymentez Prestashop plugin has an internal webhook in order to keep updated the transactions statuses between Prestashop and Paymentez. You need to follow the next steps to configure the webhook:
