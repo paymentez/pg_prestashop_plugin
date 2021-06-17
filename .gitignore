@@ -20,3 +20,5 @@
 !/cache/tcpdf/index.php
 
 .idea/
+
+config_*.xml
