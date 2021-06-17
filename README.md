@@ -17,7 +17,7 @@ Prestashop is an e-commerce solution, it's developed on PHP. Now the last stable
 You can download the current stable release from: https://github.com/paymentez/pg_prestashop_plugin/releases
 
 ## 3. Plugin Installation on Prestashop
-1. First, we need to download the current stable release of Paymentez Prestashop plugin from the previus step.
+1. First, we need to download the current stable release of Paymentez Prestashop plugin from the previous step.
 2. We need to unzip the file to get the pg_prestashop_plugin-2.0.0 folder.
 3. Now you rename the folder from **pg_prestashop_plugin-2.0.0** to **pg_prestashop_plugin**.
 4. Compress on zip format the folder to get a file called **pg_prestashop_plugin.zip**.
