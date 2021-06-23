@@ -190,6 +190,8 @@
 
             let btnOpenCheckout = $('.js-payment-checkout');
 
+            let order_installments_type = document.getElementById('installments_type') ? document.getElementById('installments_type').value : -1;
+
             btnOpenCheckout.each(function () {
                 $(this).on('click', function () {
                     paymentCheckout.open({
@@ -199,7 +201,7 @@
                         order_amount: Number("{$order_amount}"),
                         order_vat: Number("{$order_vat}"),
                         order_reference: "{$order_reference}",
-                        order_installments_type: Number(document.getElementById('installments_type').value),
+                        order_installments_type: Number(order_installments_type),
                     });
                 })
             }
