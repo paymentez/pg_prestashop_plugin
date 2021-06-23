@@ -17,7 +17,7 @@ Prestashop is an e-commerce solution, it's developed on PHP. Now the last stable
 You can download the current stable release from: https://github.com/paymentez/pg_prestashop_plugin/releases
 
 ## 3. Plugin Installation on Prestashop
-1. First, we need to download the current stable release of Paymentez Prestashop plugin from the previus step.
+1. First, we need to download the current stable release of Paymentez Prestashop plugin from the previous step.
 2. We need to unzip the file to get the pg_prestashop_plugin-2.0.0 folder.
 3. Now you rename the folder from **pg_prestashop_plugin-2.0.0** to **pg_prestashop_plugin**.
 4. Compress on zip format the folder to get a file called **pg_prestashop_plugin.zip**.
@@ -32,7 +32,7 @@ You can download the current stable release from: https://github.com/paymentez/p
 
 ## 4. Considerations and Comments
 ### 4.1. Refunds
-- The **1.0.0** plugin version does not support the **Partial Refunds** by Prestashop. However, the plugin supports **Standard Refunds** by Prestashop. 
+- The **2.0.0** plugin version does not support the **Partial Refunds** by Prestashop. However, the plugin supports **Standard Refunds** by Prestashop. 
 - The **Standard Refund** can be interpreted as a partial refund on Paymentez side, a success refund operation depends on the configured payment network accepting partial refunds.
 ### 4.2. Webhook
 The Paymentez Prestashop plugin has an internal webhook in order to keep updated the transactions statuses between Prestashop and Paymentez. You need to follow the next steps to configure the webhook:
@@ -46,5 +46,5 @@ The Paymentez Prestashop plugin has an internal webhook in order to keep updated
   8. We also configure the **Key Description**, you can provide the description regarding the key for better understanding.
   9. We will set the **Status** on Enable to provide a grant to access the data using the key.
   10. Finally, we need to configure the **Permission** field to provide the permission to access the data using the certain key. Here we need to search the resourde called **paymentezwebhook** and select the **Add (POST)** checkbox. 
-  11. The webhook its located on **https://{mystoreurl}/prestashop/api/paymentezwebhook?ws_key=KEY_GENERATED_ON_STEP_6**. 
+  11. The webhook its located on **https://{mystoreurl}/api/paymentezwebhook?ws_key=KEY_GENERATED_ON_STEP_6**. 
   12. You need to give this URL to your Paymentez agent.
