@@ -109,6 +109,8 @@ class WebserviceSpecificManagementPaymentezWebhook implements WebserviceSpecific
         {
             throw new WebserviceException('Order already updated', [1, 200]);
         }
+        $history->changeIdOrderState($status, $order->id);
+        $history->save();
         $collection = OrderPayment::getByOrderReference($order->reference);
         foreach ($collection as $order_payment)
         {
@@ -117,8 +119,6 @@ class WebserviceSpecificManagementPaymentezWebhook implements WebserviceSpecific
                 $order_payment->save();
             }
         }
-        $history->changeIdOrderState($status, $order->id);
-        $history->save();
         $this->objOutput->setStatus(200);
     }
 
