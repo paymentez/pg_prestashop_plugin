@@ -112,7 +112,7 @@ class WebserviceSpecificManagementPaymentezWebhook implements WebserviceSpecific
         $collection = OrderPayment::getByOrderReference($order->reference);
         foreach ($collection as $order_payment)
         {
-            if ($order_payment->payment_method == FLAVOR.' Prestashop Plugin') {
+            if ($order_payment->payment_method == FLAVOR.' Prestashop Plugin' or !$order_payment->payment_method) {
                 $order_payment->transaction_id = $transaction_id;
                 $order_payment->save();
             }
