@@ -1,7 +1,7 @@
 {extends "$layout"}
 {block name="content"}
     <link rel="stylesheet" href="{$urls.base_url}/modules/pg_prestashop_plugin/views/css/main.css">
-    <script src="https://cdn.paymentez.com/ccapi/sdk/payment_checkout_stable.min.js"></script>
+    <script src="https://cdn.paymentez.com/ccapi/sdk/payment_checkout_2.2.4.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script></head>
 
@@ -202,6 +202,14 @@
                         order_vat: Number("{$order_vat}"),
                         order_reference: "{$order_reference}",
                         order_installments_type: Number(order_installments_type),
+                        billing_address: {
+                            city: "{$city}",
+                            country: "{$country}",
+                            district: "{$district}",
+                            state:  "{$state}",
+                            street: "{$street}",
+                            zip: "{$zip}"
+                        },
                     });
                 })
             }

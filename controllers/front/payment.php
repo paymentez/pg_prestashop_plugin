@@ -25,6 +25,7 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
 
         $cart = $this->context->cart;
         $customer = $this->context->customer;
+        $billing_address = new Address($cart->id_address_invoice);
         $total = (float)$cart->getOrderTotal();
         $products = $cart->getProducts();
         $order_products = [];
@@ -64,6 +65,12 @@ class PG_Prestashop_PluginPaymentModuleFrontController extends ModuleFrontContro
             'installments_options' => $this->getInstallmentsOptions(),
             'enable_card'          => Configuration::get('enable_card'),
             'enable_ltp'           => Configuration::get('enable_ltp'),
+            'city'                 => $billing_address->city,
+            # TODO: MAPEAR PARA QUE SEA FORMATO MEX, COL, ECU, ETC
+            'country'              => $billing_address->country,
+            'state'                => State::getNameById($billing_address->id_state),
+            'street'               => $billing_address->address1,
+            'zip'                  => $billing_address->postcode
         ]);
 
         $this->setTemplate('module:pg_prestashop_plugin/views/templates/front/payment.tpl');
