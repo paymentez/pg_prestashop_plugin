@@ -205,7 +205,6 @@
                         billing_address: {
                             city: "{$city}",
                             country: "{$country}",
-                            district: "{$district}",
                             state:  "{$state}",
                             street: "{$street}",
                             zip: "{$zip}"
