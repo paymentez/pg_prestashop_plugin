@@ -203,12 +203,12 @@
                         order_reference: "{$order_reference}",
                         order_installments_type: Number(order_installments_type),
                         billing_address: {
-                            street: "{$street}",
-                            city: "{$city}",
-                            country: "{$country}",
-                            state:  "{$state}",
-                            zip: "{$zip}"
-                        },
+                            street: "{$billing_address.street}",
+                            city: "{$billing_address.city}",
+                            country: "{$billing_address.country}",
+                            state:  "{$billing_address.state}",
+                            zip: "{$billing_address.zip}"
+                        }
                     });
                 })
             }
