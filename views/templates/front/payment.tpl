@@ -55,7 +55,7 @@
         <div class="col-sm-7 col-lg-9">
         </div>
         <div class="col-sm-5 col-lg-3">
-            {if $enable_installments}
+            {if $enable_installments && $currency!=="COP"}
             <select class="btn btn-outline-primary dropdown-toggle btn-block" name="installments_type" id="installments_type">
                 <option selected disabled>{l s='Installments Type:' mod='pg_prestashop_plugin'}</option>
                 <option value=-1>{l s='Without Installments' mod='pg_prestashop_plugin'}</option>
@@ -189,8 +189,11 @@
             });
 
             let btnOpenCheckout = $('.js-payment-checkout');
+            let type_installments = -1;
+            if ("{$currency}" === "COP" && {$enable_installments})
+                type_installments = 0;
 
-            let order_installments_type = document.getElementById('installments_type') ? document.getElementById('installments_type').value : -1;
+            let order_installments_type = document.getElementById('installments_type') ? document.getElementById('installments_type').value : type_installments;
 
             btnOpenCheckout.each(function () {
                 $(this).on('click', function () {
